@@ -1,15 +1,31 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './Main.css'
+import NewTaskForm from './NewTaskForm';
 
-export default function Main() {
-  return (
-    <main>
-      <div className='added-tasks_container'>
-        <div className='added-tasks_container__header'>
-          <button class="add-new-task__button">Add Task</button>
-          <span className='added-tasks__span'>Added tasks:</span>
+export default class Main extends Component {
+  state = {
+    isOpen: false
+  }
+
+  render() {
+    const newTaskForm = this.state.isOpen && <NewTaskForm />
+
+    return (
+      <main>
+        <div className='added-tasks_container'>
+          <div className='added-tasks_container__header'>
+            <button class="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
+            <span className='added-tasks__span'>Added tasks:</span>
+          </div>
+          {newTaskForm}
         </div>
-      </div>
-    </main>
-  )
+      </main>
+    )
+  }
+
+  showNewTaskForm = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+  }
 }
