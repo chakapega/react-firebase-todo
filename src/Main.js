@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import './Main.css'
 import NewTaskForm from './NewTaskForm';
-import AddedTask from './AddedTask'
+import AddedTasks from './AddedTasks'
 
 export default class Main extends Component {
   state = {
-    isOpen: false
+    isOpen: false,
+    tasks: []
   }
 
   render() {
@@ -16,10 +17,10 @@ export default class Main extends Component {
         <div className='added-tasks_container'>
           <div className='added-tasks_container__header'>
             <button className="add-new-task__button" onClick={!this.state.isOpen ? this.showNewTaskForm : undefined}>Add Task</button>
-            <span className='added-tasks__span'>Added tasks:</span>
+            <span className='added-tasks__span' onClick={this.clicked}>Added tasks:</span>
           </div>
           {newTaskForm}
-          <AddedTask name={this.state.name} description={this.state.description}/>
+          <AddedTasks tasks={this.state.tasks}/>
         </div>
       </main>
     )
@@ -31,10 +32,11 @@ export default class Main extends Component {
     })
   }
 
-  getData = (name, description) => {
-    this.setState({
-      name: name,
-      description: description
-    })
+  getData = (task) => {
+    this.state.tasks.push(task)
+  }
+
+  clicked = () => {
+    console.log(this.state)
   }
 }
