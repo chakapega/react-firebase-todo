@@ -6,11 +6,10 @@ import editPng from './images/edit.png'
 export default class AddedTasks extends Component {
   render() {
     let tasks = this.props.tasks;
-    let taskIndex = 0;
 
     let tasksElements = tasks.map(task => {
       return (
-        <div className="added-task_container" key={task.name + taskIndex++}>
+        <div className="added-task_container" key={task.id} id={task.id}>
         <span className="added-task_span">{task.name} | {task.description}</span>
         <div className="image-container">
           <img className="img-edit" title="Edit" src={editPng} alt="edit"/>

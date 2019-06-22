@@ -39,4 +39,8 @@ export default class Main extends Component {
   clicked = () => {
     console.log(this.state)
   }
+
+  editTask = (task) => {
+
+  }
 }

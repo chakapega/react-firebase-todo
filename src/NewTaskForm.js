@@ -19,8 +19,9 @@ export default class NewTaskForm extends Component {
 
   addNewTask = e => {
     e.preventDefault();
-
+    
     let task = {
+      id: `${(+new Date).toString(16)}`,
       name: e.target[0].value,
       description: e.target[1].value
     }
