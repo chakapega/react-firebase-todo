@@ -13,7 +13,7 @@ export default class AddedTasks extends Component {
         <span className="added-task_span">{task.name} | {task.description}</span>
         <div className="image-container">
           <img className="img-edit" title="Edit" src={editPng} alt="edit" onClick={this.editAddedTask}/>
-          <img className="img-delete" title="Remove" src={deletePng} alt="delete"/>
+          <img className="img-delete" title="Remove" src={deletePng} alt="delete" onClick={this.removeAddedTask}/>
         </div>
         </div>
       );
@@ -35,5 +35,11 @@ export default class AddedTasks extends Component {
 
     showEditTaskForm();
     getDataEditableTask(editTaskId)
+  };
+
+  removeAddedTask = e => {
+    const getIdRemovedTask = this.props.getIdRemovedTask;
+    
+    getIdRemovedTask(e.target.parentElement.parentElement.id);
   };
 };

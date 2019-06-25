@@ -26,6 +26,7 @@ export default class Main extends Component {
       tasks={this.state.tasks}
       getDataEditableTask={this.getDataEditableTask} 
       showEditTaskForm={this.showEditTaskForm}
+      getIdRemovedTask={this.getIdRemovedTask}
     />;
 
     return (
@@ -84,5 +85,9 @@ export default class Main extends Component {
         task.description = description;
       };
     });
+  };
+
+  getIdRemovedTask = removedTaskId => {
+    console.log(removedTaskId);
   };
 };
