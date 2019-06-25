@@ -7,6 +7,6 @@ function Header() {
       <span className='logo'>To-do list</span>
     </header>
   );
-}
+};
 
 export default Header;

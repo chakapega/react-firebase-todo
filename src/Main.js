@@ -26,7 +26,7 @@ export default class Main extends Component {
       tasks={this.state.tasks}
       getDataEditableTask={this.getDataEditableTask} 
       showEditTaskForm={this.showEditTaskForm}
-      getIdRemovedTask={this.getIdRemovedTask}
+      removeTask={this.removeTask}
     />;
 
     return (
@@ -87,7 +87,22 @@ export default class Main extends Component {
     });
   };
 
-  getIdRemovedTask = removedTaskId => {
-    console.log(removedTaskId);
+  removeTask = removedTaskId => {
+    const tasks = this.state.tasks;
+    let removedTaskIndex = -1;
+
+    for(let i = 0; i < tasks.length; i++) {
+      removedTaskIndex++;
+
+      if(tasks[i].id === removedTaskId) {
+        break;
+      };
+    };
+
+    tasks.splice(removedTaskIndex, 1);
+
+    this.setState({
+      tasks: tasks
+    });
   };
 };
