@@ -4,6 +4,24 @@ import deletePng from './images/delete.png';
 import editPng from './images/edit.png';
 
 export default class AddedTasks extends Component {
+  editAddedTask = e => {
+    e.preventDefault();
+    
+    const showEditTaskForm = this.props.showEditTaskForm;
+    const getDataEditableTask = this.props.getDataEditableTask;
+    const editTaskId = e.target.parentElement.parentElement.id;
+
+    showEditTaskForm();
+    getDataEditableTask(editTaskId);
+  };
+
+  getIdRemovedTask = e => {
+    const removeTask = this.props.removeTask;
+    const removedTaskId = e.target.parentElement.parentElement.id;
+    
+    removeTask(removedTaskId);
+  };
+
   render() {
     const tasks = this.props.tasks;
     
@@ -24,23 +42,5 @@ export default class AddedTasks extends Component {
         {tasksElements}
       </div>
     );
-  };
-
-  editAddedTask = e => {
-    e.preventDefault();
-    
-    const showEditTaskForm = this.props.showEditTaskForm;
-    const getDataEditableTask = this.props.getDataEditableTask;
-    const editTaskId = e.target.parentElement.parentElement.id;
-
-    showEditTaskForm();
-    getDataEditableTask(editTaskId);
-  };
-
-  getIdRemovedTask = e => {
-    const removeTask = this.props.removeTask;
-    const removedTaskId = e.target.parentElement.parentElement.id;
-    
-    removeTask(removedTaskId);
   };
 };

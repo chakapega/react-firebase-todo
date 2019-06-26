@@ -2,6 +2,21 @@ import React, { Component } from 'react';
 import './EditTaskForm.css';
 
 export default class EditTaskForm extends Component {
+  editAddedTask = e => {
+    e.preventDefault();
+
+    const editTask = this.props.editTask;
+    const showEditTaskForm = this.props.showEditTaskForm;
+    const modifiedTask = {
+      id: this.props.dataEditTask.id,
+      name: e.target[0].value,
+      description: e.target[1].value
+    };
+
+    editTask(modifiedTask);
+    showEditTaskForm();
+  };
+
   render() {
     const showEditTaskForm = this.props.showEditTaskForm;
     const name = this.props.dataEditTask.name;
@@ -19,20 +34,5 @@ export default class EditTaskForm extends Component {
         </div>
       </form>
     );
-  };
-
-  editAddedTask = e => {
-    e.preventDefault();
-
-    const editTask = this.props.editTask;
-    const showEditTaskForm = this.props.showEditTaskForm;
-    const modifiedTask = {
-      id: this.props.dataEditTask.id,
-      name: e.target[0].value,
-      description: e.target[1].value
-    };
-
-    editTask(modifiedTask);
-    showEditTaskForm();
   };
 };

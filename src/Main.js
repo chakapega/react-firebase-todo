@@ -12,38 +12,6 @@ export default class Main extends Component {
     dataEditTask: null
   };
 
-  render() {
-    const newTaskForm = this.state.isOpenNewTaskForm && <NewTaskForm 
-      showNewTaskForm={this.showNewTaskForm} 
-      getDataNewTask={this.getDataNewTask}
-      />;
-    const editTaskForm = this.state.isOpenEditTaskForm && <EditTaskForm 
-      showEditTaskForm={this.showEditTaskForm} 
-      dataEditTask={this.state.dataEditTask}
-      editTask={this.editTask}
-    />;
-    const addedTasks = <AddedTasks 
-      tasks={this.state.tasks}
-      getDataEditableTask={this.getDataEditableTask} 
-      showEditTaskForm={this.showEditTaskForm}
-      removeTask={this.removeTask}
-    />;
-
-    return (
-      <main>
-        <div className='added-tasks_container'>
-          <div className='added-tasks_container__header'>
-            <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
-            <span className='added-tasks__span' onClick={this.stateStatus}>Added tasks:</span>
-          </div>
-          {newTaskForm}
-          {editTaskForm}
-          {addedTasks}
-        </div>
-      </main>
-    );
-  };
-
   showNewTaskForm = () => {
     this.setState({
       isOpenNewTaskForm: !this.state.isOpenNewTaskForm
@@ -104,5 +72,37 @@ export default class Main extends Component {
     this.setState({
       tasks: tasks
     });
+  };
+
+  render() {
+    const newTaskForm = this.state.isOpenNewTaskForm && <NewTaskForm 
+      showNewTaskForm={this.showNewTaskForm} 
+      getDataNewTask={this.getDataNewTask}
+      />;
+    const editTaskForm = this.state.isOpenEditTaskForm && <EditTaskForm 
+      showEditTaskForm={this.showEditTaskForm} 
+      dataEditTask={this.state.dataEditTask}
+      editTask={this.editTask}
+    />;
+    const addedTasks = <AddedTasks 
+      tasks={this.state.tasks}
+      getDataEditableTask={this.getDataEditableTask} 
+      showEditTaskForm={this.showEditTaskForm}
+      removeTask={this.removeTask}
+    />;
+
+    return (
+      <main>
+        <div className='added-tasks_container'>
+          <div className='added-tasks_container__header'>
+            <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
+            <span className='added-tasks__span' onClick={this.stateStatus}>Added tasks:</span>
+          </div>
+          {newTaskForm}
+          {editTaskForm}
+          {addedTasks}
+        </div>
+      </main>
+    );
   };
 };

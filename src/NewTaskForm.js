@@ -2,6 +2,21 @@ import React, { Component } from 'react';
 import './NewTaskForm.css';
 
 export default class NewTaskForm extends Component {
+  addNewTask = e => {
+    e.preventDefault();
+
+    const getDataNewTask = this.props.getDataNewTask;
+    const showNewTaskForm = this.props.showNewTaskForm;
+    let task = {
+      id: `${(+new Date).toString(16)}`,
+      name: e.target[0].value,
+      description: e.target[1].value
+    };
+    
+    getDataNewTask(task);
+    showNewTaskForm();
+  };
+
   render() {
     const showNewTaskForm = this.props.showNewTaskForm;
   
@@ -17,20 +32,5 @@ export default class NewTaskForm extends Component {
         </div>
       </form>
     );
-  };
-
-  addNewTask = e => {
-    e.preventDefault();
-
-    const getDataNewTask = this.props.getDataNewTask;
-    const showNewTaskForm = this.props.showNewTaskForm;
-    let task = {
-      id: `${(+new Date).toString(16)}`,
-      name: e.target[0].value,
-      description: e.target[1].value
-    };
-    
-    getDataNewTask(task);
-    showNewTaskForm();
   };
 };
