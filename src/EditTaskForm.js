@@ -5,10 +5,9 @@ export default class EditTaskForm extends Component {
   editAddedTask = e => {
     e.preventDefault();
 
-    const editTask = this.props.editTask;
-    const showEditTaskForm = this.props.showEditTaskForm;
+    const { editTask, showEditTaskForm } = this.props;
     const modifiedTask = {
-      id: this.props.dataEditTask.id,
+      id: this.props.editedDataTask.id,
       name: e.target[0].value,
       description: e.target[1].value
     };
@@ -18,9 +17,8 @@ export default class EditTaskForm extends Component {
   };
 
   render() {
-    const showEditTaskForm = this.props.showEditTaskForm;
-    const name = this.props.dataEditTask.name;
-    const description = this.props.dataEditTask.description;
+    const { showEditTaskForm } = this.props;
+    const { name, description } = this.props.editedDataTask;
 
     return (
       <form className="new-task_form" onSubmit={this.editAddedTask}>

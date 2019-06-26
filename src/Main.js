@@ -9,18 +9,22 @@ export default class Main extends Component {
     isOpenNewTaskForm: false,
     isOpenEditTaskForm: false,
     tasks: [],
-    dataEditTask: null
+    editedDataTask: null
   };
 
   showNewTaskForm = () => {
+    const { isOpenNewTaskForm } = this.state;
+
     this.setState({
-      isOpenNewTaskForm: !this.state.isOpenNewTaskForm
+      isOpenNewTaskForm: !isOpenNewTaskForm
     });
   };
 
   showEditTaskForm = () => {
+    const { isOpenEditTaskForm } = this.state;
+
     this.setState({
-      isOpenEditTaskForm: !this.state.isOpenEditTaskForm
+      isOpenEditTaskForm: !isOpenEditTaskForm
     });
   };
 
@@ -28,27 +32,21 @@ export default class Main extends Component {
     this.state.tasks.push(task);
   };
 
-  stateStatus = () => {
-    console.log(this.state);
-  };
-
   getDataEditableTask = editTaskId => {
     this.state.tasks.map(task => {
       if(task.id === editTaskId) {
         this.setState({
-          dataEditTask: task,
+          editedDataTask: task,
         });
       };
     });
   };
 
   editTask = modifiedTask => {
-    const name = modifiedTask.name;
-    const description = modifiedTask.description;
-    const editTaskId = modifiedTask.id;
+    const { name, description, id } = modifiedTask;
 
     this.state.tasks.map(task => {
-      if(task.id === editTaskId) {
+      if(task.id === id) {
         task.name = name;
         task.description = description;
       };
@@ -56,7 +54,7 @@ export default class Main extends Component {
   };
 
   removeTask = removedTaskId => {
-    const tasks = this.state.tasks;
+    const { tasks } = this.state 
     let removedTaskIndex = -1;
 
     for(let i = 0; i < tasks.length; i++) {
@@ -81,7 +79,7 @@ export default class Main extends Component {
       />;
     const editTaskForm = this.state.isOpenEditTaskForm && <EditTaskForm 
       showEditTaskForm={this.showEditTaskForm} 
-      dataEditTask={this.state.dataEditTask}
+      editedDataTask={this.state.editedDataTask}
       editTask={this.editTask}
     />;
     const addedTasks = <AddedTasks 
@@ -96,7 +94,7 @@ export default class Main extends Component {
         <div className='added-tasks_container'>
           <div className='added-tasks_container__header'>
             <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
-            <span className='added-tasks__span' onClick={this.stateStatus}>Added tasks:</span>
+            <span className='added-tasks__span'>Added tasks:</span>
           </div>
           {newTaskForm}
           {editTaskForm}
