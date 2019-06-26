@@ -29,7 +29,9 @@ export default class Main extends Component {
   };
 
   getDataNewTask = task => {
-    this.state.tasks.push(task);
+    const { tasks } = this.state;
+
+    this.setState({ tasks: [...tasks, task] });
   };
 
   getDataEditableTask = editTaskId => {
