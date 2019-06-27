@@ -56,21 +56,14 @@ export default class Main extends Component {
   };
 
   removeTask = removedTaskId => {
-    const { tasks } = this.state 
-    let removedTaskIndex = -1;
+    const { tasks } = this.state;
 
-    for(let i = 0; i < tasks.length; i++) {
-      removedTaskIndex++;
-
-      if(tasks[i].id === removedTaskId) {
-        break;
-      };
-    };
-
-    tasks.splice(removedTaskIndex, 1);
+    const filteredTasks = tasks.filter(task => {
+      return task.id !== removedTaskId;
+    });
 
     this.setState({
-      tasks: tasks
+      tasks: filteredTasks
     });
   };
 
