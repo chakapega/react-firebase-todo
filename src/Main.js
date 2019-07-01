@@ -76,7 +76,6 @@ export default class Main extends Component {
   removeTask = e => {
     const { tasks } = this.state;
     const removedTaskId = e.target.parentElement.parentElement.id;
-
     const filteredTasks = tasks.filter(task => {
       return task.id !== removedTaskId;
     });
@@ -98,7 +97,7 @@ export default class Main extends Component {
       isAddingNewTask={this.state.isAddingNewTask}
       editTask={this.editTask}
       editedDataTask={this.state.editedDataTask}
-    />
+    />;
 
     return (
       <main>

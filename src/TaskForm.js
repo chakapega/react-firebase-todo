@@ -3,9 +3,11 @@ import './TaskForm.css';
 
 export default class TaskForm extends Component {
   render() {
-    const { closeTaskForm, addNewTask, isAddingNewTask } = this.props;
+    const { closeTaskForm, isAddingNewTask } = this.props;
     
     if(isAddingNewTask) {
+      const { addNewTask } = this.props;
+
       return (
         <form className="new-task_form" onSubmit={addNewTask}>
           <label className="new-task_form__label_name" htmlFor="new-task_form__input_name">The name of your new task</label>

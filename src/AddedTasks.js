@@ -7,7 +7,7 @@ export default class AddedTasks extends Component {
   render() {
     const { tasks, removeTask, showTaskForm } = this.props;
     
-    let tasksElements = tasks.map(task => {
+    const tasksElements = tasks.map(task => {
     const { id, name, description } = task;
 
       return (
