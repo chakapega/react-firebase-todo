@@ -34,7 +34,9 @@ export default class Main extends Component {
     this.setState({ tasks: [...tasks, task] });
   };
 
-  getDataEditableTask = editTaskId => {
+  getDataEditableTask = e => {
+    const editTaskId = e.target.parentElement.parentElement.id;
+
     this.state.tasks.map(task => {
       if(task.id === editTaskId) {
         this.setState({
@@ -42,6 +44,8 @@ export default class Main extends Component {
         });
       };
     });
+
+    this.showEditTaskForm();
   };
 
   editTask = modifiedTask => {
@@ -55,8 +59,9 @@ export default class Main extends Component {
     });
   };
 
-  removeTask = removedTaskId => {
+  removeTask = e => {
     const { tasks } = this.state;
+    const removedTaskId = e.target.parentElement.parentElement.id;
 
     const filteredTasks = tasks.filter(task => {
       return task.id !== removedTaskId;
@@ -68,19 +73,18 @@ export default class Main extends Component {
   };
 
   render() {
-    const newTaskForm = this.state.isOpenNewTaskForm && <NewTaskForm 
-      showNewTaskForm={this.showNewTaskForm} 
+    const newTaskForm = this.state.isOpenNewTaskForm && <NewTaskForm
+      showNewTaskForm={this.showNewTaskForm}
       getDataNewTask={this.getDataNewTask}
       />;
-    const editTaskForm = this.state.isOpenEditTaskForm && <EditTaskForm 
-      showEditTaskForm={this.showEditTaskForm} 
+    const editTaskForm = this.state.isOpenEditTaskForm && <EditTaskForm
+      showEditTaskForm={this.showEditTaskForm}
       editedDataTask={this.state.editedDataTask}
       editTask={this.editTask}
     />;
-    const addedTasks = <AddedTasks 
+    const addedTasks = <AddedTasks
       tasks={this.state.tasks}
-      getDataEditableTask={this.getDataEditableTask} 
-      showEditTaskForm={this.showEditTaskForm}
+      getDataEditableTask={this.getDataEditableTask}
       removeTask={this.removeTask}
     />;
 
