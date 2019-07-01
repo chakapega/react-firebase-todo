@@ -1,62 +1,76 @@
 import React, { Component } from 'react';
 import './Main.css';
-import NewTaskForm from './NewTaskForm';
 import AddedTasks from './AddedTasks';
-import EditTaskForm from './EditTaskForm';
+import TaskForm from './TaskForm';
 
 export default class Main extends Component {
   state = {
-    isOpenNewTaskForm: false,
-    isOpenEditTaskForm: false,
     tasks: [],
-    editedDataTask: null
+    editedDataTask: null,
+    isOpenTaskForm: false,
+    isAddingNewTask: false
   };
 
-  showNewTaskForm = () => {
-    const { isOpenNewTaskForm } = this.state;
+  showTaskForm = e => {
+    const { isOpenTaskForm } = this.state;
+
+    if(e.target.className === 'add-new-task__button') {
+      this.setState({
+        isOpenTaskForm: !isOpenTaskForm,
+        isAddingNewTask: true
+      });
+    } else {
+      const editTaskId = e.target.parentElement.parentElement.id;
+
+      this.state.tasks.map(task => {
+        if(task.id === editTaskId) {
+          this.setState({
+            editedDataTask: task,
+            isOpenTaskForm: !isOpenTaskForm,
+            isAddingNewTask: false
+          });
+        };
+      });
+    };
+  };
+
+  closeTaskForm = () => {
+    const { isOpenTaskForm } = this.state;
 
     this.setState({
-      isOpenNewTaskForm: !isOpenNewTaskForm
+      isOpenTaskForm: !isOpenTaskForm,
+      isAddingNewTask: false
     });
   };
 
-  showEditTaskForm = () => {
-    const { isOpenEditTaskForm } = this.state;
+  addNewTask = e => {
+    e.preventDefault();
 
-    this.setState({
-      isOpenEditTaskForm: !isOpenEditTaskForm
-    });
-  };
-
-  getDataNewTask = task => {
     const { tasks } = this.state;
+    const task = {
+      id: `${(+new Date).toString(16)}`,
+      name: e.target[0].value,
+      description: e.target[1].value
+    };
 
     this.setState({ tasks: [...tasks, task] });
+
+    this.closeTaskForm();
   };
 
-  getDataEditableTask = e => {
-    const editTaskId = e.target.parentElement.parentElement.id;
+  editTask = e => {
+    e.preventDefault();
 
-    this.state.tasks.map(task => {
-      if(task.id === editTaskId) {
-        this.setState({
-          editedDataTask: task,
-        });
+    const { tasks } = this.state;
+
+    tasks.map(task => {
+      if(task.id === this.state.editedDataTask.id) {
+        task.name = e.target[0].value;
+        task.description = e.target[1].value;
       };
     });
 
-    this.showEditTaskForm();
-  };
-
-  editTask = modifiedTask => {
-    const { name, description, id } = modifiedTask;
-
-    this.state.tasks.map(task => {
-      if(task.id === id) {
-        task.name = name;
-        task.description = description;
-      };
-    });
+    this.closeTaskForm();
   };
 
   removeTask = e => {
@@ -73,30 +87,27 @@ export default class Main extends Component {
   };
 
   render() {
-    const newTaskForm = this.state.isOpenNewTaskForm && <NewTaskForm
-      showNewTaskForm={this.showNewTaskForm}
-      getDataNewTask={this.getDataNewTask}
-      />;
-    const editTaskForm = this.state.isOpenEditTaskForm && <EditTaskForm
-      showEditTaskForm={this.showEditTaskForm}
-      editedDataTask={this.state.editedDataTask}
-      editTask={this.editTask}
-    />;
     const addedTasks = <AddedTasks
       tasks={this.state.tasks}
-      getDataEditableTask={this.getDataEditableTask}
+      showTaskForm={this.showTaskForm}
       removeTask={this.removeTask}
     />;
+    const taskForm = this.state.isOpenTaskForm && <TaskForm
+      closeTaskForm={this.closeTaskForm}
+      addNewTask={this.addNewTask}
+      isAddingNewTask={this.state.isAddingNewTask}
+      editTask={this.editTask}
+      editedDataTask={this.state.editedDataTask}
+    />
 
     return (
       <main>
         <div className='added-tasks_container'>
           <div className='added-tasks_container__header'>
-            <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
+            <button className="add-new-task__button" onClick={this.showTaskForm}>Add Task</button>
             <span className='added-tasks__span'>Added tasks:</span>
           </div>
-          {newTaskForm}
-          {editTaskForm}
+          {taskForm}
           {addedTasks}
         </div>
       </main>
