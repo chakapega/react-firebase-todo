@@ -6,10 +6,10 @@ export default class TaskForm extends Component {
     const { closeTaskForm, isAddingNewTask } = this.props;
     
     if(isAddingNewTask) {
-      const { addNewTask } = this.props;
+      const { addTask } = this.props;
 
       return (
-        <form className="new-task_form" onSubmit={addNewTask}>
+        <form className="new-task_form" onSubmit={addTask}>
           <label className="new-task_form__label_name" htmlFor="new-task_form__input_name">The name of your new task</label>
           <input type="text" name="name" id="new-task_form__input_name"/>
           <label className="new-task_form__label_description" htmlFor="new-task_form__textarea_description">Description of your new task</label>

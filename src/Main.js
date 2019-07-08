@@ -43,7 +43,7 @@ export default class Main extends Component {
     });
   };
 
-  addNewTask = e => {
+  addTask = e => {
     e.preventDefault();
 
     const { tasks } = this.state;
@@ -93,7 +93,7 @@ export default class Main extends Component {
     />;
     const taskForm = this.state.isOpenTaskForm && <TaskForm
       closeTaskForm={this.closeTaskForm}
-      addNewTask={this.addNewTask}
+      addTask={this.addTask}
       isAddingNewTask={this.state.isAddingNewTask}
       editTask={this.editTask}
       editedDataTask={this.state.editedDataTask}
