@@ -62,12 +62,17 @@ export default class Main extends Component {
     e.preventDefault();
 
     const { tasks } = this.state;
+    const copiesTasks = JSON.parse(JSON.stringify(tasks));
 
-    tasks.map(task => {
+    copiesTasks.map(task => {
       if(task.id === this.state.editedDataTask.id) {
         task.name = e.target[0].value;
         task.description = e.target[1].value;
       };
+    });
+
+    this.setState({
+      tasks: copiesTasks
     });
 
     this.closeTaskForm();
