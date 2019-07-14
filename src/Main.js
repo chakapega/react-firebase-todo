@@ -11,6 +11,15 @@ export default class Main extends Component {
     isAddingNewTask: false
   };
 
+  componentDidMount() {
+    window.db.collection("todos").get()
+      .then(documents => {
+        documents.forEach(document => {
+          console.log(document.data());
+      });
+    });
+  };
+
   showTaskForm = e => {
     const { isOpenTaskForm } = this.state;
 
