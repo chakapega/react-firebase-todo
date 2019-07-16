@@ -12,12 +12,19 @@ export default class Main extends Component {
   };
 
   componentDidMount() {
+    const tasks = [];
+
     window.db.collection("todos").get()
-      .then(documents => {
-        documents.forEach(document => {
-          console.log(document.data());
+      .then(querySnapshot => {
+        querySnapshot.forEach(document => {
+          const newDoc = document.data();
+          newDoc.id = document.id;
+
+          tasks.push(newDoc);
       });
     });
+
+    console.log(tasks);
   };
 
   showTaskForm = e => {
