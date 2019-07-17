@@ -24,7 +24,7 @@ export default class Main extends Component {
       });
     });
 
-    console.log(tasks);
+    this.setState({ tasks });
   };
 
   showTaskForm = e => {
