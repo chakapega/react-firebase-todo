@@ -17,14 +17,16 @@ export default class Main extends Component {
     window.db.collection("todos").get()
       .then(querySnapshot => {
         querySnapshot.forEach(document => {
-          const newDoc = document.data();
-          newDoc.id = document.id;
+          const newDocument = document.data();
+          newDocument.id = document.id;
 
-          tasks.push(newDoc);
+          tasks.push(newDocument);
+      });
+
+      this.setState({
+        tasks: tasks
       });
     });
-
-    this.setState({ tasks });
   };
 
   showTaskForm = e => {
@@ -62,14 +64,26 @@ export default class Main extends Component {
   addTask = e => {
     e.preventDefault();
 
-    const { tasks } = this.state;
-    const task = {
-      id: `${(+new Date).toString(16)}`,
+    window.db.collection("todos").add({
       name: e.target[0].value,
       description: e.target[1].value
-    };
+    });
 
-    this.setState({ tasks: [...tasks, task] });
+    const tasks = [];
+
+    window.db.collection("todos").get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(document => {
+          const newDocument = document.data();
+          newDocument.id = document.id;
+
+          tasks.push(newDocument);
+      });
+
+      this.setState({
+        tasks: tasks
+      });
+    });
 
     this.closeTaskForm();
   };
