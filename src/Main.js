@@ -118,14 +118,24 @@ export default class Main extends Component {
   };
 
   removeTask = e => {
-    const { tasks } = this.state;
     const removedTaskId = e.target.parentElement.parentElement.id;
-    const filteredTasks = tasks.filter(task => {
-      return task.id !== removedTaskId;
-    });
 
-    this.setState({
-      tasks: filteredTasks
+    window.db.collection('todos').doc(removedTaskId).delete();
+
+    const tasks = [];
+
+    window.db.collection("todos").get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(document => {
+          const newDocument = document.data();
+          newDocument.id = document.id;
+
+          tasks.push(newDocument);
+        });
+
+      this.setState({
+        tasks: tasks
+      });
     });
   };
 
