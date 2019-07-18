@@ -91,18 +91,27 @@ export default class Main extends Component {
   editTask = e => {
     e.preventDefault();
 
-    const { tasks } = this.state;
-    const copiesTasks = JSON.parse(JSON.stringify(tasks));
+    const { id } = this.state.editedDataTask;
 
-    copiesTasks.map(task => {
-      if(task.id === this.state.editedDataTask.id) {
-        task.name = e.target[0].value;
-        task.description = e.target[1].value;
-      };
+    window.db.collection('todos').doc(id).update({
+      name: e.target[0].value,
+      description: e.target[1].value
     });
 
-    this.setState({
-      tasks: copiesTasks
+    const tasks = [];
+
+    window.db.collection("todos").get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(document => {
+          const newDocument = document.data();
+          newDocument.id = document.id;
+
+          tasks.push(newDocument);
+        });
+
+      this.setState({
+        tasks: tasks
+      });
     });
 
     this.closeTaskForm();
