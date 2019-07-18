@@ -14,6 +14,12 @@ export default class Main extends Component {
   componentDidMount() {
     const tasks = [];
 
+    this.updateState();
+  };
+
+  updateState = () => {
+    const tasks = [];
+
     window.db.collection("todos").get()
       .then(querySnapshot => {
         querySnapshot.forEach(document => {
@@ -69,21 +75,7 @@ export default class Main extends Component {
       description: e.target[1].value
     });
 
-    const tasks = [];
-
-    window.db.collection("todos").get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(document => {
-          const newDocument = document.data();
-          newDocument.id = document.id;
-
-          tasks.push(newDocument);
-      });
-
-      this.setState({
-        tasks: tasks
-      });
-    });
+    this.updateState();
 
     this.closeTaskForm();
   };
@@ -98,21 +90,7 @@ export default class Main extends Component {
       description: e.target[1].value
     });
 
-    const tasks = [];
-
-    window.db.collection("todos").get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(document => {
-          const newDocument = document.data();
-          newDocument.id = document.id;
-
-          tasks.push(newDocument);
-        });
-
-      this.setState({
-        tasks: tasks
-      });
-    });
+    this.updateState();
 
     this.closeTaskForm();
   };
@@ -122,21 +100,7 @@ export default class Main extends Component {
 
     window.db.collection('todos').doc(removedTaskId).delete();
 
-    const tasks = [];
-
-    window.db.collection("todos").get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(document => {
-          const newDocument = document.data();
-          newDocument.id = document.id;
-
-          tasks.push(newDocument);
-        });
-
-      this.setState({
-        tasks: tasks
-      });
-    });
+    this.updateState();
   };
 
   render() {
