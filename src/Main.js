@@ -32,26 +32,23 @@ export default class Main extends Component {
     });
   };
 
-  closeTaskForm = () => {
-    const { isOpenTaskForm } = this.state;
-
+  closeTaskForm = () =>
     this.setState({
-      isOpenTaskForm: !isOpenTaskForm,
+      isOpenTaskForm: false,
       isAddingNewTask: false,
     });
-  };
 
   addTask = e => {
     e.preventDefault();
 
     const { tasks } = this.state;
-    const task = {
+    const newTask = {
       id: `${(+new Date()).toString(16)}`,
-      name: e.target[0].value,
-      description: e.target[1].value,
+      name: e.target.name.value,
+      description: e.target.description.value,
     };
 
-    this.setState({ tasks: [...tasks, task] });
+    this.setState({ tasks: [...tasks, newTask] });
 
     this.closeTaskForm();
   };
@@ -64,8 +61,8 @@ export default class Main extends Component {
 
     newtasks.forEach(task => {
       if (task.id === this.state.editedDataTask.id) {
-        task.name = e.target[0].value;
-        task.description = e.target[1].value;
+        task.name = e.target.name.value;
+        task.description = e.target.description.value;
       }
     });
 
@@ -76,9 +73,8 @@ export default class Main extends Component {
     this.closeTaskForm();
   };
 
-  removeTask = e => {
+  removeTask = removedTaskId => {
     const { tasks } = this.state;
-    const removedTaskId = e.target.parentElement.parentElement.id;
     const filteredTasks = tasks.filter(task => {
       return task.id !== removedTaskId;
     });
