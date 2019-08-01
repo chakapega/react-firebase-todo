@@ -5,7 +5,7 @@ export default function Tasks({ tasks, removeTask, showTaskForm }) {
   return (
     <div className='tasks'>
       {tasks.map(task => (
-        <Task key={task.id} task={task} removeTask={removeTask} showTaskForm={showTaskForm}/>
+        <Task key={task.id} task={task} removeTask={removeTask} showTaskForm={() => showTaskForm(task.id)}/>
       ))}
     </div>
   );
