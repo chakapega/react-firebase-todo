@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Main.css';
 import AddedTasks from './AddedTasks';
 import TaskForm from './TaskForm';
+import db from '../firebase/firebase';
 
 export default class Main extends Component {
   state = {
@@ -14,7 +15,7 @@ export default class Main extends Component {
   componentDidMount() {
     const tasks = [];
 
-    window.db.collection("todos").get()
+    db.collection("todos").get()
       .then(querySnapshot => {
         querySnapshot.forEach(document => {
           const newDocument = document.data();
@@ -63,7 +64,7 @@ export default class Main extends Component {
     const { tasks } = this.state;
     const newTask = {};
 
-    window.db.collection("todos").add({
+    db.collection("todos").add({
       name: e.target.name.value,
       description: e.target.description.value
     })
@@ -90,7 +91,7 @@ export default class Main extends Component {
 
     const copiesTasks = [...tasks];
 
-    window.db.collection("todos").doc(editableTask.id).update({
+    db.collection("todos").doc(editableTask.id).update({
       name: e.target.name.value,
       description: e.target.description.value
     })
@@ -111,7 +112,7 @@ export default class Main extends Component {
   removeTask = id => {
     const { tasks } = this.state;
 
-    window.db.collection("todos").doc(id).delete()
+    db.collection("todos").doc(id).delete()
     .then(() => {
       const filteredTasks = tasks.filter(task => task.id !== id);
 
