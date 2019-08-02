@@ -75,8 +75,8 @@ export default class Main extends Component {
       this.setState({ tasks: [...tasks, newTask] });
     })
     .catch(error => {
-      alert('Error');
-      console.log(error);
+      alert("Error");
+      console.log("Error adding document: ", error);
     });
 
     this.closeTaskForm();
@@ -108,17 +108,22 @@ export default class Main extends Component {
     this.closeTaskForm();
   };
 
-  //ok
-
-  removeTask = e => {
+  removeTask = id => {
     const { tasks } = this.state;
-    const removedTaskId = e.target.parentElement.parentElement.id;
-    const filteredTasks = tasks.filter(task => {
-      return task.id !== removedTaskId;
-    });
 
-    this.setState({
-      tasks: filteredTasks
+    window.db.collection("todos").doc(id).delete()
+    .then(() => {
+      console.log("Document successfully deleted!");
+
+      const filteredTasks = tasks.filter(task => task.id !== id);
+
+      this.setState({
+        tasks: filteredTasks
+      });
+    })
+    .catch(error => {
+      alert("Error");
+      console.error("Error removing document: ", error);
     });
   };
 
