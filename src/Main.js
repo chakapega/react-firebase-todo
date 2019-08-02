@@ -32,7 +32,8 @@ export default class Main extends Component {
   showNewTaskForm = () => {
     this.setState({
       isOpenTaskForm: true,
-      isAddingNewTask: true
+      isAddingNewTask: true,
+      editableTask: null
     });
   };
 
@@ -81,33 +82,33 @@ export default class Main extends Component {
     this.closeTaskForm();
   };
 
-  //ok
-
   editTask = e => {
     e.preventDefault();
+    e.persist();
+    
+    const { editableTask, tasks } = this.state;
 
-    console.log(e.target);
+    const copiesTasks = [...tasks];
+
+    window.db.collection("todos").doc(editableTask.id).update({
+      name: e.target.name.value,
+      description: e.target.description.value
+    })
+    .then(() => {
+      copiesTasks.forEach(task => {
+        if(task.id === editableTask.id) {
+          task.name = e.target.name.value;
+          task.description = e.target.description.value;
+        };
+      });
+
+      this.setState({ tasks: copiesTasks });
+    });
+
+    this.closeTaskForm();
   };
 
-  // editTask = e => {
-  //   e.preventDefault();
-
-  //   const { tasks } = this.state;
-  //   const copiesTasks = JSON.parse(JSON.stringify(tasks));
-
-  //   copiesTasks.map(task => {
-  //     if(task.id === this.state.editedDataTask.id) {
-  //       task.name = e.target[0].value;
-  //       task.description = e.target[1].value;
-  //     };
-  //   });
-
-  //   this.setState({
-  //     tasks: copiesTasks
-  //   });
-
-  //   this.closeTaskForm();
-  // };
+  //ok
 
   removeTask = e => {
     const { tasks } = this.state;
