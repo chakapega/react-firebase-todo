@@ -57,30 +57,31 @@ export default class Main extends Component {
 
   addTask = e => {
     e.preventDefault();
+    e.persist();
+
+    const { tasks } = this.state;
+    const newTask = {};
 
     window.db.collection("todos").add({
       name: e.target.name.value,
       description: e.target.description.value
-    });
+    })
+    .then(document => {
+      newTask.name = e.target.name.value;
+      newTask.description = e.target.description.value;
+      newTask.id = document.id;
 
-    const tasks = [];
-
-    window.db.collection("todos").get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(document => {
-          const newDocument = document.data();
-          newDocument.id = document.id;
-
-          tasks.push(newDocument);
-      });
-
-      this.setState({
-        tasks: tasks
-      });
+      this.setState({ tasks: [...tasks, newTask] });
+    })
+    .catch(error => {
+      alert('Error:');
+      console.log(error);
     });
 
     this.closeTaskForm();
   };
+
+  //ok
 
   editTask = e => {
     e.preventDefault();
