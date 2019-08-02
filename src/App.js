@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import Main from './Main';
 import Header from './Header';
 
-function App() {
+export default function App() {
   return (
     <Fragment>
       <Header />
@@ -10,5 +10,3 @@ function App() {
     </Fragment>
   );
 };
-
-export default App;

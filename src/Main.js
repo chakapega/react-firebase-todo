@@ -8,7 +8,7 @@ export default class Main extends Component {
     tasks: [],
     isOpenTaskForm: false,
     isAddingNewTask: false,
-    editableTask: null
+    editableTask: undefined
   };
 
   componentDidMount() {
@@ -52,7 +52,7 @@ export default class Main extends Component {
     this.setState({
       isOpenTaskForm: false,
       isAddingNewTask: false,
-      editableTask: null
+      editableTask: undefined
     });
   };
 
