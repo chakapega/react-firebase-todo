@@ -128,7 +128,7 @@ export default class Main extends Component {
   };
 
   render() {
-    const { isAddingNewTask, editableTask } = this.state;
+    const { isAddingNewTask, editableTask, tasks } = this.state;
 
     return (
       <main className='main_container'>
@@ -137,7 +137,7 @@ export default class Main extends Component {
             <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
             <span className='added-tasks__span'>Added tasks:</span>
           </div>
-          {this.state.isOpenTaskForm && 
+          {this.state.isOpenTaskForm &&
             <TaskForm
               closeTaskForm={this.closeTaskForm}
               addTask={this.addTask}
@@ -147,7 +147,7 @@ export default class Main extends Component {
             />
           }
           <AddedTasks
-            tasks={this.state.tasks}
+            tasks={tasks}
             showEditableTaskForm={this.showEditableTaskForm}
             removeTask={this.removeTask}
           />
