@@ -6,9 +6,9 @@ import TaskForm from './TaskForm';
 export default class Main extends Component {
   state = {
     tasks: [],
-    editableTask: null,
     isOpenTaskForm: false,
-    isAddingNewTask: false
+    isAddingNewTask: false,
+    editableTask: null
   };
 
   componentDidMount() {
@@ -32,8 +32,7 @@ export default class Main extends Component {
   showNewTaskForm = () => {
     this.setState({
       isOpenTaskForm: true,
-      isAddingNewTask: true,
-      editableTask: null
+      isAddingNewTask: true
     });
   };
 
@@ -52,7 +51,8 @@ export default class Main extends Component {
   closeTaskForm = () => {
     this.setState({
       isOpenTaskForm: false,
-      isAddingNewTask: false
+      isAddingNewTask: false,
+      editableTask: null
     });
   };
 
@@ -75,7 +75,7 @@ export default class Main extends Component {
       this.setState({ tasks: [...tasks, newTask] });
     })
     .catch(error => {
-      alert('Error:');
+      alert('Error');
       console.log(error);
     });
 
