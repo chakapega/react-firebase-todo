@@ -14,6 +14,12 @@ export default class Main extends Component {
   componentDidMount() {
     const tasks = [];
 
+    this.updateState();
+  };
+
+  updateState = () => {
+    const tasks = [];
+
     window.db.collection("todos").get()
       .then(querySnapshot => {
         querySnapshot.forEach(document => {
@@ -111,15 +117,11 @@ export default class Main extends Component {
   //ok
 
   removeTask = e => {
-    const { tasks } = this.state;
     const removedTaskId = e.target.parentElement.parentElement.id;
-    const filteredTasks = tasks.filter(task => {
-      return task.id !== removedTaskId;
-    });
 
-    this.setState({
-      tasks: filteredTasks
-    });
+    window.db.collection('todos').doc(removedTaskId).delete();
+
+    this.updateState();
   };
 
   render() {
