@@ -113,8 +113,6 @@ export default class Main extends Component {
 
     window.db.collection("todos").doc(id).delete()
     .then(() => {
-      console.log("Document successfully deleted!");
-
       const filteredTasks = tasks.filter(task => task.id !== id);
 
       this.setState({
