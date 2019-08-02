@@ -1,6 +1,6 @@
 import React from 'react';
-import deletePng from './images/delete.png';
-import editPng from './images/edit.png';
+import deletePng from '../images/delete.png';
+import editPng from '../images/edit.png';
 import './Task.css';
 
 export default function Task({ task , removeTask , showEditableTaskForm }) {
