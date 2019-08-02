@@ -6,7 +6,7 @@ import TaskForm from './TaskForm';
 export default class Main extends Component {
   state = {
     tasks: [],
-    editedDataTask: null,
+    editableTask: null,
     isOpenTaskForm: false,
     isAddingNewTask: false
   };
@@ -21,42 +21,36 @@ export default class Main extends Component {
           newDocument.id = document.id;
 
           tasks.push(newDocument);
-      });
+        });
 
-      this.setState({
-        tasks: tasks
+        this.setState({
+          tasks: tasks
+        });
       });
+  };
+
+  showNewTaskForm = () => {
+    this.setState({
+      isOpenTaskForm: true,
+      isAddingNewTask: true
     });
   };
 
-  showTaskForm = e => {
-    const { isOpenTaskForm } = this.state;
+  showEditableTaskForm = id => {
+    const { tasks } = this.state;
 
-    if(e.target.className === 'add-new-task__button') {
-      this.setState({
-        isOpenTaskForm: !isOpenTaskForm,
-        isAddingNewTask: true
-      });
-    } else {
-      const editTaskId = e.target.parentElement.parentElement.id;
+    const editableTask = tasks.find(task => task.id === id);
 
-      this.state.tasks.map(task => {
-        if(task.id === editTaskId) {
-          this.setState({
-            editedDataTask: task,
-            isOpenTaskForm: !isOpenTaskForm,
-            isAddingNewTask: false
-          });
-        };
-      });
-    };
+    this.setState({
+      editableTask: editableTask,
+      isOpenTaskForm: true,
+      isAddingNewTask: false,
+    });
   };
 
   closeTaskForm = () => {
-    const { isOpenTaskForm } = this.state;
-
     this.setState({
-      isOpenTaskForm: !isOpenTaskForm,
+      isOpenTaskForm: false,
       isAddingNewTask: false
     });
   };
@@ -65,8 +59,8 @@ export default class Main extends Component {
     e.preventDefault();
 
     window.db.collection("todos").add({
-      name: e.target[0].value,
-      description: e.target[1].value
+      name: e.target.name.value,
+      description: e.target.description.value
     });
 
     const tasks = [];
@@ -91,22 +85,28 @@ export default class Main extends Component {
   editTask = e => {
     e.preventDefault();
 
-    const { tasks } = this.state;
-    const copiesTasks = JSON.parse(JSON.stringify(tasks));
-
-    copiesTasks.map(task => {
-      if(task.id === this.state.editedDataTask.id) {
-        task.name = e.target[0].value;
-        task.description = e.target[1].value;
-      };
-    });
-
-    this.setState({
-      tasks: copiesTasks
-    });
-
-    this.closeTaskForm();
+    console.log(e.target);
   };
+
+  // editTask = e => {
+  //   e.preventDefault();
+
+  //   const { tasks } = this.state;
+  //   const copiesTasks = JSON.parse(JSON.stringify(tasks));
+
+  //   copiesTasks.map(task => {
+  //     if(task.id === this.state.editedDataTask.id) {
+  //       task.name = e.target[0].value;
+  //       task.description = e.target[1].value;
+  //     };
+  //   });
+
+  //   this.setState({
+  //     tasks: copiesTasks
+  //   });
+
+  //   this.closeTaskForm();
+  // };
 
   removeTask = e => {
     const { tasks } = this.state;
@@ -121,28 +121,29 @@ export default class Main extends Component {
   };
 
   render() {
-    const addedTasks = <AddedTasks
-      tasks={this.state.tasks}
-      showTaskForm={this.showTaskForm}
-      removeTask={this.removeTask}
-    />;
-    const taskForm = this.state.isOpenTaskForm && <TaskForm
-      closeTaskForm={this.closeTaskForm}
-      addTask={this.addTask}
-      isAddingNewTask={this.state.isAddingNewTask}
-      editTask={this.editTask}
-      editedDataTask={this.state.editedDataTask}
-    />;
+    const { isAddingNewTask, editableTask } = this.state;
 
     return (
-      <main>
+      <main className='main_container'>
         <div className='added-tasks_container'>
           <div className='added-tasks_container__header'>
-            <button className="add-new-task__button" onClick={this.showTaskForm}>Add Task</button>
+            <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
             <span className='added-tasks__span'>Added tasks:</span>
           </div>
-          {taskForm}
-          {addedTasks}
+          {this.state.isOpenTaskForm && 
+            <TaskForm
+              closeTaskForm={this.closeTaskForm}
+              addTask={this.addTask}
+              isAddingNewTask={isAddingNewTask}
+              editTask={this.editTask}
+              editableTask={editableTask}
+            />
+          }
+          <AddedTasks
+            tasks={this.state.tasks}
+            showEditableTaskForm={this.showEditableTaskForm}
+            removeTask={this.removeTask}
+          />
         </div>
       </main>
     );

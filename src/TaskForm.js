@@ -21,7 +21,7 @@ export default class TaskForm extends Component {
         </form>
       );
     } else {
-      const { name, description } = this.props.editedDataTask;
+      const { name, description } = this.props.editableTask;
       const { editTask } = this.props;
 
       return (
