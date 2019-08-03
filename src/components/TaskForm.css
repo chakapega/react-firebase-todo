@@ -1,0 +1,62 @@
+.task_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 380px;
+  width: 760px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  z-index: 9999;
+  position: absolute;
+  background-color: #d7e8bc;
+  border: 2px solid #9da09a;
+  border-radius: 7px;
+}
+.task_form__label_name {
+  font-size: 25px;
+  padding: 5px;
+}
+.task_form__label_description {
+  font-size: 25px;
+  padding: 5px;
+}
+#task_form__input_name {
+  border-radius: 5px;
+  border: 1px solid #9da09a;
+  height: 25px;
+  width: 300px;
+}
+#task_form__textarea_description {
+  border-radius: 5px;
+  border: 1px solid #9da09a;
+  width: 400px;
+  height: 110px;
+}
+.task_form__btns {
+  width: 150px;
+  display: flex;
+  justify-content: space-around;
+}
+.task_form__btn_submit {
+  outline: none;
+  height: 30px;
+  border-radius: 7px;
+  color: #4d614e;
+  background-color: #d0dc88;
+  font-size: 15px;
+}
+.task_form__btn_add:active {
+  font-size: 14px;
+}
+.task_form__btn_cancel {
+  outline: none;
+  height: 30px;
+  border-radius: 7px;
+  color: #4d614e;
+  background-color: #d0dc88;
+  font-size: 15px;
+}
+.task_form__btn_cancel:active {
+  font-size: 14px;
+}

@@ -8,25 +8,21 @@
   align-items: center;
   font-size: 25px;
 }
-
 .added-task_span {
   margin-left: 10px;
 }
-
 .img-delete {
   height: 26px;
   width: 26px;
   cursor: pointer;
   opacity: 0.65;
 }
-
 .img-edit {
   height: 26px;
   width: 26px;
   cursor: pointer;
   opacity: 0.65;
 }
-
 .image-container {
   display: flex;
   width: 65px;

@@ -2,25 +2,20 @@ import React, { Component } from 'react';
 import './Main.css';
 import AddedTasks from './AddedTasks';
 import TaskForm from './TaskForm';
+import db from '../firebase/firebase';
 
 export default class Main extends Component {
   state = {
     tasks: [],
-    editableTask: null,
     isOpenTaskForm: false,
-    isAddingNewTask: false
+    isAddingNewTask: false,
+    editableTask: undefined
   };
 
   componentDidMount() {
     const tasks = [];
 
-    this.updateState();
-  };
-
-  updateState = () => {
-    const tasks = [];
-
-    window.db.collection("todos").get()
+    db.collection("todos").get()
       .then(querySnapshot => {
         querySnapshot.forEach(document => {
           const newDocument = document.data();
@@ -38,8 +33,7 @@ export default class Main extends Component {
   showNewTaskForm = () => {
     this.setState({
       isOpenTaskForm: true,
-      isAddingNewTask: true,
-      editableTask: null
+      isAddingNewTask: true
     });
   };
 
@@ -58,7 +52,8 @@ export default class Main extends Component {
   closeTaskForm = () => {
     this.setState({
       isOpenTaskForm: false,
-      isAddingNewTask: false
+      isAddingNewTask: false,
+      editableTask: undefined
     });
   };
 
@@ -69,7 +64,7 @@ export default class Main extends Component {
     const { tasks } = this.state;
     const newTask = {};
 
-    window.db.collection("todos").add({
+    db.collection("todos").add({
       name: e.target.name.value,
       description: e.target.description.value
     })
@@ -81,8 +76,8 @@ export default class Main extends Component {
       this.setState({ tasks: [...tasks, newTask] });
     })
     .catch(error => {
-      alert('Error:');
-      console.log(error);
+      alert("Error");
+      console.log("Error adding document: ", error);
     });
 
     this.closeTaskForm();
@@ -96,7 +91,7 @@ export default class Main extends Component {
 
     const copiesTasks = [...tasks];
 
-    window.db.collection("todos").doc(editableTask.id).update({
+    db.collection("todos").doc(editableTask.id).update({
       name: e.target.name.value,
       description: e.target.description.value
     })
@@ -114,18 +109,25 @@ export default class Main extends Component {
     this.closeTaskForm();
   };
 
-  //ok
+  removeTask = id => {
+    const { tasks } = this.state;
 
-  removeTask = e => {
-    const removedTaskId = e.target.parentElement.parentElement.id;
+    db.collection("todos").doc(id).delete()
+    .then(() => {
+      const filteredTasks = tasks.filter(task => task.id !== id);
 
-    window.db.collection('todos').doc(removedTaskId).delete();
-
-    this.updateState();
+      this.setState({
+        tasks: filteredTasks
+      });
+    })
+    .catch(error => {
+      alert("Error");
+      console.error("Error removing document: ", error);
+    });
   };
 
   render() {
-    const { isAddingNewTask, editableTask } = this.state;
+    const { isAddingNewTask, editableTask, tasks } = this.state;
 
     return (
       <main className='main_container'>
@@ -134,7 +136,7 @@ export default class Main extends Component {
             <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
             <span className='added-tasks__span'>Added tasks:</span>
           </div>
-          {this.state.isOpenTaskForm && 
+          {this.state.isOpenTaskForm &&
             <TaskForm
               closeTaskForm={this.closeTaskForm}
               addTask={this.addTask}
@@ -144,7 +146,7 @@ export default class Main extends Component {
             />
           }
           <AddedTasks
-            tasks={this.state.tasks}
+            tasks={tasks}
             showEditableTaskForm={this.showEditableTaskForm}
             removeTask={this.removeTask}
           />
