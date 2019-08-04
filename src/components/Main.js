@@ -131,11 +131,11 @@ export default class Main extends Component {
 
     return (
       <main className='main_container'>
+        <div className='added-tasks_container__header'>
+          <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
+          <span className='added-tasks__span'>Added tasks:</span>
+        </div>
         <div className='added-tasks_container'>
-          <div className='added-tasks_container__header'>
-            <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
-            <span className='added-tasks__span'>Added tasks:</span>
-          </div>
           {this.state.isOpenTaskForm &&
             <TaskForm
               closeTaskForm={this.closeTaskForm}

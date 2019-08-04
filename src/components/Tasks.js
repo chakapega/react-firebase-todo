@@ -1,5 +1,6 @@
 import React from 'react';
 import Task from './Task';
+import './Tasks.css';
 
 export default function Tasks({ tasks, removeTask, showEditableTaskForm }) {
   return (
