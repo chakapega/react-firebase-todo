@@ -8,25 +8,21 @@
 .added-tasks_container {
   display: flex;
   width: 80vw;
-  background-color: #b5d28363;
   border-radius: 7px;
   margin-top: 15px;
 }
 .added-tasks__span {
   height: 30px;
   font-size: 25px;
-  font-weight: bold;
 }
 .add-new-task__button {
   outline: none;
   height: 30px;
   width: 120px;
   border-radius: 7px;
-  color: #4d614e;
   background-color: #d0dc88;
-  font-size: 23px;
+  font-size: 19px;
   font-family: 'Indie Flower', cursive;
-  font-weight: bold;
   cursor: pointer;
 }
 .add-new-task__button:active {
