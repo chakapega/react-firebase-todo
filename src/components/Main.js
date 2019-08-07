@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Main.css';
 import AddedTasks from './AddedTasks';
 import TaskForm from './TaskForm';
-import db from '../firebase/firebase';
+import { db } from '../firebase/firebase';
 
 export default class Main extends Component {
   state = {
@@ -127,7 +127,7 @@ export default class Main extends Component {
   };
 
   render() {
-    const { isAddingNewTask, editableTask, tasks } = this.state;
+    const { isOpenTaskForm, isAddingNewTask, editableTask, tasks } = this.state;
 
     return (
       <main className='main_container'>
@@ -136,7 +136,7 @@ export default class Main extends Component {
           <span className='added-tasks__span'>Added tasks:</span>
         </div>
         <div className='added-tasks_container'>
-          {this.state.isOpenTaskForm &&
+          {isOpenTaskForm &&
             <TaskForm
               closeTaskForm={this.closeTaskForm}
               addTask={this.addTask}
