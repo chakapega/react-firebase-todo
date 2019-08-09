@@ -14,29 +14,60 @@ class Main extends Component {
     userUid: null
   };
 
-  componentDidUpdate() {
-    console.log(this.props.userUid);
-    this.setState({userUid: this.props.userUid});
-  };
-
-  componentDidMount() {
-    const { userUid } = this.state;
-    const tasks = [];
-
-    db.collection(userUid).get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(document => {
-          const newDocument = document.data();
-          newDocument.id = document.id;
-
-          tasks.push(newDocument);
-        });
-
-        this.setState({
-          tasks: tasks
-        });
+  componentDidUpdate(prevProps) {
+    console.log('props: ', this.props.userUid);
+    console.log('prevProps: ', prevProps.userUid);
+    console.log('state:', this.state.userUid)
+    
+    if (this.props.userUid !== prevProps.userUid) {
+      this.setState({userUid: this.props.userUid}, () => {
+        const { userUid } = this.state;
+        const tasks = [];
+    
+        if (userUid) {
+          console.log('request started: ', userUid);
+          db.collection(userUid).get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(document => {
+              const newDocument = document.data();
+              newDocument.id = document.id;
+    
+              tasks.push(newDocument);
+            });
+    
+            this.setState({
+              tasks: tasks
+            });
+          });
+        } else {
+          this.setState({ tasks });
+        };
       });
+    };
+
+
   };
+
+  // componentDidMount() {
+  //   const { userUid } = this.state;
+  //   const tasks = [];
+
+  //   if (userUid) {
+  //     db.collection(userUid).get()
+  //     .then(querySnapshot => {
+  //       querySnapshot.forEach(document => {
+  //         const newDocument = document.data();
+  //         newDocument.id = document.id;
+
+  //         tasks.push(newDocument);
+  //       });
+
+  //       this.setState({
+  //         tasks: tasks
+  //       });
+  //     });
+  //   };
+  // };
 
   showNewTaskForm = () => {
     this.setState({
@@ -69,10 +100,11 @@ class Main extends Component {
     e.preventDefault();
     e.persist();
 
+    const { userUid } = this.state;
     const { tasks } = this.state;
     const newTask = {};
 
-    db.collection("todos").add({
+    db.collection(userUid).add({
       name: e.target.name.value,
       description: e.target.description.value
     })
@@ -95,11 +127,12 @@ class Main extends Component {
     e.preventDefault();
     e.persist();
     
+    const { userUid } = this.state;
     const { editableTask, tasks } = this.state;
 
     const copiesTasks = [...tasks];
 
-    db.collection("todos").doc(editableTask.id).update({
+    db.collection(userUid).doc(editableTask.id).update({
       name: e.target.name.value,
       description: e.target.description.value
     })
@@ -118,9 +151,10 @@ class Main extends Component {
   };
 
   removeTask = id => {
+    const { userUid } = this.state;
     const { tasks } = this.state;
 
-    db.collection("todos").doc(id).delete()
+    db.collection(userUid).doc(id).delete()
     .then(() => {
       const filteredTasks = tasks.filter(task => task.id !== id);
 
