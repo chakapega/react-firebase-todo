@@ -3,19 +3,27 @@ import './Main.css';
 import AddedTasks from './AddedTasks';
 import TaskForm from './TaskForm';
 import { db } from '../firebase/firebase';
+import { connect } from 'react-redux';
 
-export default class Main extends Component {
+class Main extends Component {
   state = {
     tasks: [],
     isOpenTaskForm: false,
     isAddingNewTask: false,
-    editableTask: undefined
+    editableTask: undefined,
+    userUid: null
+  };
+
+  componentDidUpdate() {
+    console.log(this.props.userUid);
+    this.setState({userUid: this.props.userUid});
   };
 
   componentDidMount() {
+    const { userUid } = this.state;
     const tasks = [];
 
-    db.collection("todos").get()
+    db.collection(userUid).get()
       .then(querySnapshot => {
         querySnapshot.forEach(document => {
           const newDocument = document.data();
@@ -155,3 +163,12 @@ export default class Main extends Component {
     );
   };
 };
+
+const mapStateToProps = (state) => {
+  // console.log(state);
+  return {
+    userUid: state.userUid
+  };
+};
+
+export const WrappedMain = connect(mapStateToProps)(Main);

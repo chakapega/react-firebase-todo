@@ -1,12 +1,16 @@
 import React, { Fragment } from 'react';
-import Main from './components/Main';
+import { WrappedMain } from './components/Main';
 import Header from './components/Header';
+import { Provider } from 'react-redux';
+import { store } from './components/Authentication';
 
 export default function App() {
   return (
-    <Fragment>
-      <Header />
-      <Main />
-    </Fragment>
+    <Provider store={store}>
+      <Fragment>
+        <Header />
+        <WrappedMain />
+      </Fragment>
+    </Provider>
   );
 };

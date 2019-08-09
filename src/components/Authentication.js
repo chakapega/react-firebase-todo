@@ -4,20 +4,52 @@ import LoggedOut from './LoggedOut';
 import LoggedIn from './LoggedIn';
 import AuthForm from './AuthForm';
 import { auth } from '../firebase/firebase';
+import { connect } from 'react-redux';
+import { createStore } from 'redux';
 
-export default class Authentication extends Component {
+const initialState = {
+  isOpenAuthForm: false,
+  isAuthorized: false,
+  userUid: ''
+};
+
+const CHANGE_USER_UID = 'CHANGE_USER_UID';
+
+const changeUserUid = (uid) => {
+  return {
+    type: CHANGE_USER_UID,
+    payload: uid
+  };
+};
+
+const authenticationReducer = (state = initialState, action ) => {
+  switch (action.type) {
+    case CHANGE_USER_UID:
+      return {...state, userUid: action.payload}
+  }
+  return state;
+};
+
+export const store = createStore(authenticationReducer);
+
+class Authentication extends Component {
   state = {
-    isOpenAuthForm: false
+    isOpenAuthForm: this.props.isOpenAuthForm,
+    isAuthorized: this.props.isAuthorized
   };
 
   constructor(props) {
     super(props)
 
+    const dispatch = this.props.dispatch;
+
     auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({ isAuthorized: true });
+        dispatch(changeUserUid(user.uid));
       } else {
         this.setState({ isAuthorized: false });
+        dispatch(changeUserUid(''));
       };
     });
   };
@@ -65,3 +97,13 @@ export default class Authentication extends Component {
     );
   };
 };
+
+const mapStateToProps = (state) => {
+  return {
+    isOpenAuthForm: state.isOpenAuthForm,
+    isAuthorized: state.isAuthorized,
+    userUid: state.userUid
+  };
+};
+
+export const WrappedAuthentication = connect(mapStateToProps)(Authentication);
