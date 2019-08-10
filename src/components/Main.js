@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import './Main.css';
+import { connect } from 'react-redux';
+import { db } from '../firebase/firebase';
+
 import AddedTasks from './AddedTasks';
 import TaskForm from './TaskForm';
-import { db } from '../firebase/firebase';
-import { connect } from 'react-redux';
+import './Main.css';
 
 class Main extends Component {
   state = {
@@ -198,11 +199,12 @@ class Main extends Component {
   };
 };
 
-const mapStateToProps = (state) => {
-  // console.log(state);
+const mapStateToProps = state => {
   return {
-    userUid: state.userUid
+    userUid: state.user.uid
   };
 };
+
+
 
 export const WrappedMain = connect(mapStateToProps)(Main);
