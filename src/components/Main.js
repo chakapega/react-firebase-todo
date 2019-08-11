@@ -4,6 +4,7 @@ import { db } from '../firebase/firebase';
 
 import AddedTasks from './AddedTasks';
 import TaskForm from './TaskForm';
+
 import './Main.css';
 
 class Main extends Component {
@@ -16,17 +17,12 @@ class Main extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    console.log('props: ', this.props.userUid);
-    console.log('prevProps: ', prevProps.userUid);
-    console.log('state:', this.state.userUid)
-    
     if (this.props.userUid !== prevProps.userUid) {
       this.setState({userUid: this.props.userUid}, () => {
         const { userUid } = this.state;
         const tasks = [];
     
         if (userUid) {
-          console.log('request started: ', userUid);
           db.collection(userUid).get()
           .then(querySnapshot => {
             querySnapshot.forEach(document => {
@@ -45,30 +41,7 @@ class Main extends Component {
         };
       });
     };
-
-
   };
-
-  // componentDidMount() {
-  //   const { userUid } = this.state;
-  //   const tasks = [];
-
-  //   if (userUid) {
-  //     db.collection(userUid).get()
-  //     .then(querySnapshot => {
-  //       querySnapshot.forEach(document => {
-  //         const newDocument = document.data();
-  //         newDocument.id = document.id;
-
-  //         tasks.push(newDocument);
-  //       });
-
-  //       this.setState({
-  //         tasks: tasks
-  //       });
-  //     });
-  //   };
-  // };
 
   showNewTaskForm = () => {
     this.setState({
@@ -116,9 +89,8 @@ class Main extends Component {
 
       this.setState({ tasks: [...tasks, newTask] });
     })
-    .catch(error => {
-      alert("Error");
-      console.log("Error adding document: ", error);
+    .catch((error)=> {
+      console.error("Error adding document: ", error);
     });
 
     this.closeTaskForm();
@@ -170,14 +142,17 @@ class Main extends Component {
   };
 
   render() {
-    const { isOpenTaskForm, isAddingNewTask, editableTask, tasks } = this.state;
+    const { isOpenTaskForm, isAddingNewTask, editableTask, tasks, userUid } = this.state;
 
     return (
       <main className='main_container'>
-        <div className='added-tasks_container__header'>
-          <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
-          <span className='added-tasks__span'>Added tasks:</span>
-        </div>
+        {userUid ?
+          <div className='added-tasks_container__header'>
+            <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
+            <span className='added-tasks__span'>Added tasks:</span>
+          </div> :
+          null
+        }
         <div className='added-tasks_container'>
           {isOpenTaskForm &&
             <TaskForm
@@ -188,11 +163,14 @@ class Main extends Component {
               editableTask={editableTask}
             />
           }
-          <AddedTasks
-            tasks={tasks}
-            showEditableTaskForm={this.showEditableTaskForm}
-            removeTask={this.removeTask}
-          />
+          {tasks.length ?
+            <AddedTasks
+              tasks={tasks}
+              showEditableTaskForm={this.showEditableTaskForm}
+              removeTask={this.removeTask}
+            /> : 
+            null
+          }
         </div>
       </main>
     );
@@ -204,7 +182,5 @@ const mapStateToProps = state => {
     userUid: state.user.uid
   };
 };
-
-
 
 export const WrappedMain = connect(mapStateToProps)(Main);

@@ -1,6 +1,7 @@
 import React from 'react';
-import './Header.css';
 import { WrappedAuthentication } from './Authentication';
+
+import './Header.css';
 
 export default function Header() {
   return (
