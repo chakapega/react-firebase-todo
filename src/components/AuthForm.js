@@ -8,6 +8,7 @@ export default function AuthForm({ closeAuthForm, signIn, signUp, isAccountCreat
   return (
     <div className='modal_container'>
       <form className='auth_form' onSubmit={handleSubmit}>
+        {isAccountCreation ? <span className='auth_form__span'>Create your account</span> : null}
         <label className='auth_form__label_email' htmlFor='auth_form__input_email'>Email</label>
         <input type='email' name='email' id='auth_form__input_email'></input>
         <label className='auth_form__label_password' htmlFor='auth_form__input_password'>Password</label>

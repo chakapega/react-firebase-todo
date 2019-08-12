@@ -23,6 +23,7 @@ class Main extends Component {
         const tasks = [];
     
         if (userUid) {
+          console.log('Request started');
           db.collection(userUid).get()
           .then(querySnapshot => {
             querySnapshot.forEach(document => {
@@ -52,7 +53,6 @@ class Main extends Component {
 
   showEditableTaskForm = id => {
     const { tasks } = this.state;
-
     const editableTask = tasks.find(task => task.id === id);
 
     this.setState({
@@ -74,53 +74,65 @@ class Main extends Component {
     e.preventDefault();
     e.persist();
 
+    const name = e.target.name.value;
+    const description = e.target.description.value;
     const { userUid } = this.state;
-    const { tasks } = this.state;
     const newTask = {};
+    const { tasks } = this.state;
+    
 
-    db.collection(userUid).add({
-      name: e.target.name.value,
-      description: e.target.description.value
-    })
-    .then(document => {
-      newTask.name = e.target.name.value;
-      newTask.description = e.target.description.value;
-      newTask.id = document.id;
-
-      this.setState({ tasks: [...tasks, newTask] });
-    })
-    .catch((error)=> {
-      console.error("Error adding document: ", error);
-    });
-
-    this.closeTaskForm();
+    if (name && description) {
+      db.collection(userUid).add({
+        name: name,
+        description: description
+      })
+      .then(document => {
+        newTask.name = name;
+        newTask.description = description;
+        newTask.id = document.id;
+  
+        this.setState({ tasks: [...tasks, newTask] });
+  
+        this.closeTaskForm();
+      })
+      .catch((error)=> {
+        console.error("Error adding document: ", error);
+      });
+    } else {
+      alert('Please fill in the empty fields');
+    };
   };
 
   editTask = e => {
     e.preventDefault();
     e.persist();
     
+    const name = e.target.name.value;
+    const description = e.target.description.value;
     const { userUid } = this.state;
     const { editableTask, tasks } = this.state;
-
     const copiesTasks = [...tasks];
 
-    db.collection(userUid).doc(editableTask.id).update({
-      name: e.target.name.value,
-      description: e.target.description.value
-    })
-    .then(() => {
-      copiesTasks.forEach(task => {
-        if(task.id === editableTask.id) {
-          task.name = e.target.name.value;
-          task.description = e.target.description.value;
-        };
+    if (name, description) {
+      db.collection(userUid).doc(editableTask.id).update({
+        name: name,
+        description: description
+      })
+      .then(() => {
+        copiesTasks.forEach(task => {
+          if(task.id === editableTask.id) {
+            task.name = name;
+            task.description = description;
+          };
+        });
+  
+        this.setState({ tasks: copiesTasks });
+  
+        this.closeTaskForm();
       });
-
-      this.setState({ tasks: copiesTasks });
-    });
-
-    this.closeTaskForm();
+    } else {
+      alert('Please fill in the empty fields');
+    };
   };
 
   removeTask = id => {

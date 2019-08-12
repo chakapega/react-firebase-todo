@@ -59,6 +59,9 @@ class Authentication extends Component {
       .then(() => {
         this.setState({ isAuthorized: true });
         this.closeAuthForm();
+      })
+      .catch(error => {
+        alert(error.message);
       });
   };
 
@@ -74,8 +77,7 @@ class Authentication extends Component {
         alert('Account successfully created and you are logged in');
       })
       .catch((error) => {
-        alert('Error');
-        console.log('Error: ', error)
+        alert(error.message);
       });
   };
 
