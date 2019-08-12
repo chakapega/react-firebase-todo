@@ -1,3 +1,7 @@
+## Application info
+
+My simple to-do list application that works in conjunction with Google Firebase (authentication, data storage). The application is still being finalized.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
