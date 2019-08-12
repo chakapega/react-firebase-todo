@@ -23,7 +23,6 @@ class Main extends Component {
         const tasks = [];
     
         if (userUid) {
-          console.log('Request started');
           db.collection(userUid).get()
           .then(querySnapshot => {
             querySnapshot.forEach(document => {
