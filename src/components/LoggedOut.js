@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-import './LoggedOut.css';
+// import './LoggedOut.css';
 
 export default function LoggedOut({ showSignInAuthForm, showSignUpAuthForm }) {
   return (
-    <div className="logged-out_container">
-      <button type='button' className='sign-in_btn' onClick={showSignInAuthForm}>Sign in</button>
-      <button type='button' className='sign-up_btn' onClick={showSignUpAuthForm}>Sign up</button>
-    </div>
+    <Fragment>
+      <li><a className="waves-effect waves-light btn" onClick={showSignInAuthForm}>Sign in</a></li>
+      <li><a className="waves-effect waves-light btn" onClick={showSignUpAuthForm}>Sign up</a></li>
+    </Fragment>
   );
 };
+
+
+
+{/* <button type='button' className='sign-in_btn' onClick={showSignInAuthForm}>Sign in</button>
+<button type='button' className='sign-up_btn' onClick={showSignUpAuthForm}>Sign up</button> */}
