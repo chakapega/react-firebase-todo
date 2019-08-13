@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './TaskForm.css';
+// import './TaskForm.css';
 
 const TaskForm = props =>  {
   const { closeTaskForm, isAddingNewTask, addTask, editTask, editableTask = {} } = props;

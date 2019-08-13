@@ -5,7 +5,7 @@ import { db } from '../firebase/firebase';
 import AddedTasks from './AddedTasks';
 import TaskForm from './TaskForm';
 
-import './Main.css';
+// import './Main.css';
 
 class Main extends Component {
   state = {
@@ -156,13 +156,16 @@ class Main extends Component {
     const { isOpenTaskForm, isAddingNewTask, editableTask, tasks, userUid } = this.state;
 
     return (
-      <main className='main_container'>
+      <main className='main'>
         {userUid ?
           <div className='added-tasks_container__header'>
             <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
             <span className='added-tasks__span'>Added tasks:</span>
-          </div> :
-          null
+          </div>
+          :
+          <div style={{marginTop: 50 + 'px'}} className="container">
+            <h2 className="container">Log in to view and add tasks</h2>
+          </div>
         }
         <div className='added-tasks_container'>
           {isOpenTaskForm &&
