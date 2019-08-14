@@ -167,27 +167,29 @@ class Main extends Component {
             <h2 className="container">Log in to view and add tasks</h2>
           </div>
         }
-        <div className='added-tasks_container'>
-          {isOpenTaskForm &&
-            ReactDOM.createPortal(
-              <TaskForm
-              closeTaskForm={this.closeTaskForm}
-              addTask={this.addTask}
-              isAddingNewTask={isAddingNewTask}
-              editTask={this.editTask}
-              editableTask={editableTask}
-            />,
-            divModal
-            )
-          }
-          {tasks.length ?
-            <AddedTasks
-              tasks={tasks}
-              showEditableTaskForm={this.showEditableTaskForm}
-              removeTask={this.removeTask}
-            /> : 
-            null
-          }
+        <div className="container">
+          <ul className="collapsible popout">
+            {isOpenTaskForm &&
+              ReactDOM.createPortal(
+                <TaskForm
+                closeTaskForm={this.closeTaskForm}
+                addTask={this.addTask}
+                isAddingNewTask={isAddingNewTask}
+                editTask={this.editTask}
+                editableTask={editableTask}
+              />,
+              divModal
+              )
+            }
+            {tasks.length ?
+              <AddedTasks
+                tasks={tasks}
+                showEditableTaskForm={this.showEditableTaskForm}
+                removeTask={this.removeTask}
+              /> : 
+              null
+            }
+          </ul>
         </div>
       </main>
     );
