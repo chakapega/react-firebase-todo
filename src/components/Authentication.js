@@ -92,7 +92,7 @@ class Authentication extends Component {
     const divModal = document.getElementById('modal');
 
     return (
-      <ul className="right hide-on-med-and-down">
+      <div style={{width: 300 + 'px'}} className="right">
         {!isAuthorized && <LoggedOut showSignUpAuthForm={this.showSignUpAuthForm} showSignInAuthForm={this.showSignInAuthForm} />}
         {isAuthorized && <LoggedIn logOut={this.logOut} />}
         {isOpenAuthForm &&
@@ -100,7 +100,7 @@ class Authentication extends Component {
             <AuthForm isAccountCreation={isAccountCreation} closeAuthForm={this.closeAuthForm} signUp={this.signUp} signIn={this.signIn} />,
             divModal,
           )}
-      </ul>
+      </div>
     );
   };
 };

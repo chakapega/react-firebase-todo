@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { db } from '../firebase/firebase';
+import ReactDOM from 'react-dom';
 
 import AddedTasks from './AddedTasks';
 import TaskForm from './TaskForm';
-
-// import './Main.css';
 
 class Main extends Component {
   state = {
@@ -154,13 +153,14 @@ class Main extends Component {
 
   render() {
     const { isOpenTaskForm, isAddingNewTask, editableTask, tasks, userUid } = this.state;
+    const divModal = document.getElementById('modal');
 
     return (
-      <main className='main'>
+      <main className='center main'>
         {userUid ?
-          <div className='added-tasks_container__header'>
-            <button className="add-new-task__button" onClick={this.showNewTaskForm}>Add Task</button>
-            <span className='added-tasks__span'>Added tasks:</span>
+          <div style={{margin: 15 + 'px'}} className='col s12'>
+            <button className="waves-effect waves-light btn" onClick={this.showNewTaskForm}>Add Task</button>
+            <h4>Added tasks:</h4>
           </div>
           :
           <div style={{marginTop: 50 + 'px'}} className="container">
@@ -169,13 +169,16 @@ class Main extends Component {
         }
         <div className='added-tasks_container'>
           {isOpenTaskForm &&
-            <TaskForm
+            ReactDOM.createPortal(
+              <TaskForm
               closeTaskForm={this.closeTaskForm}
               addTask={this.addTask}
               isAddingNewTask={isAddingNewTask}
               editTask={this.editTask}
               editableTask={editableTask}
-            />
+            />,
+            divModal
+            )
           }
           {tasks.length ?
             <AddedTasks
