@@ -151,6 +151,20 @@ class Main extends Component {
     });
   };
 
+  openSelectedTask = e => {
+    if (e.target.className === 'collapsible-header') {
+      const selectedTaskUl = document.getElementById(e.target.parentElement.id);
+
+      selectedTaskUl.classList.toggle('active');
+      
+      if (selectedTaskUl.children[1].style.display === '') {
+        selectedTaskUl.children[1].style.display = 'block';
+      } else if (selectedTaskUl.children[1].style.display === 'block') {
+        selectedTaskUl.children[1].style.display = '';
+      };
+    };
+  };
+
   render() {
     const { isOpenTaskForm, isAddingNewTask, editableTask, tasks, userUid } = this.state;
     const divModal = document.getElementById('modal');
@@ -186,6 +200,7 @@ class Main extends Component {
                 tasks={tasks}
                 showEditableTaskForm={this.showEditableTaskForm}
                 removeTask={this.removeTask}
+                openSelectedTask={this.openSelectedTask}
               /> : 
               null
             }

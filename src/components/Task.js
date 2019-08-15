@@ -2,12 +2,12 @@ import React from 'react';
 import deletePng from '../images/delete.png';
 import editPng from '../images/edit.png';
 
-export default function Task({ task , removeTask , showEditableTaskForm }) {
+export default function Task({ task , removeTask , showEditableTaskForm, openSelectedTask }) {
   const { id, name, description } = task;
 
   return (
-    <li>
-      <div style={{display: 'flex', justifyContent: 'space-between'}} className="collapsible-header">
+    <li id={id}>
+      <div style={{display: 'flex', justifyContent: 'space-between'}} className="collapsible-header" onClick={openSelectedTask}>
         {name}
         <div>
           <i className="material-icons" onClick={() => showEditableTaskForm(id)}>edit</i>
