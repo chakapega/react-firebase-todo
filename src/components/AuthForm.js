@@ -20,7 +20,7 @@ export default function AuthForm({ closeAuthForm, signIn, signUp, isAccountCreat
       <div className='row'>
         <form style={{height: 220 + 'px'}} className="white col s12" onSubmit={handleSubmit}>
           <div className="input-field col s12">
-            <input id="input_email" type="email" name='email' className="validate"></input>
+            <input autoFocus id="input_email" type="email" name='email' className="validate"></input>
             <label htmlFor="input_email">Email</label>
           </div>
           <div className="input-field col s12">
