@@ -168,18 +168,17 @@ class Main extends Component {
   render() {
     const { isOpenTaskForm, isAddingNewTask, editableTask, tasks, userUid } = this.state;
     const divModal = document.getElementById('modal');
+    const buttonsContainer = document.querySelector('.buttons_container');
 
     return (
       <main className='center main'>
         {userUid ?
           <div style={{margin: 15 + 'px'}} className='col s12'>
-            <button className="waves-effect waves-light btn" onClick={this.showNewTaskForm}>Add Task</button>
+            {ReactDOM.createPortal(<button style={{margin: 10 + 'px'}} className="waves-effect waves-light btn" onClick={this.showNewTaskForm}>+ Add Task</button>, buttonsContainer)}
             <h4>Added tasks:</h4>
           </div>
           :
-          <div style={{marginTop: 50 + 'px'}} className="container">
-            <h2 className="container">Log in to view and add tasks</h2>
-          </div>
+          <h2 style={{marginTop: 50 + 'px'}} className="container">Log in to view and add tasks</h2>
         }
         <div className="container">
           <ul className="collapsible popout">

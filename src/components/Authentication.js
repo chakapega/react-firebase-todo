@@ -7,12 +7,15 @@ import { changeUserUid } from '../actions/user';
 import LoggedOut from './LoggedOut';
 import LoggedIn from './LoggedIn';
 import AuthForm from './AuthForm';
+import AccountDetails from './AccountDetails';
 
 class Authentication extends Component {
   state = {
     isOpenAuthForm: false,
     isAuthorized: false,
-    isAccountCreation: false
+    isAccountCreation: false,
+    email: '',
+    isOpenAccountDetails: false
   };
 
   componentDidMount() {
@@ -20,10 +23,10 @@ class Authentication extends Component {
 
     auth.onAuthStateChanged(user => {
       if (user) {
-        this.setState({ isAuthorized: true });
+        this.setState({ isAuthorized: true, email: user.email });
         changeUserUid(user.uid);
       } else {
-        this.setState({ isAuthorized: false });
+        this.setState({ isAuthorized: false, email: '' });
         changeUserUid('');
       };
     });
@@ -87,19 +90,33 @@ class Authentication extends Component {
     });
   };
 
+  viewAccountDetails = () => {
+    this.setState({ isOpenAccountDetails: true });
+  };
+
+  closeAccountDetails = () => {
+    this.setState({ isOpenAccountDetails: false });
+  };
+
   render() {
-    const { isAuthorized, isOpenAuthForm, isAccountCreation } = this.state;
+    const { isAuthorized, isOpenAuthForm, isAccountCreation, isOpenAccountDetails, email } = this.state;
     const divModal = document.getElementById('modal');
 
     return (
-      <div style={{width: 300 + 'px'}} className="right">
+      <div className="buttons_container right">
         {!isAuthorized && <LoggedOut showSignUpAuthForm={this.showSignUpAuthForm} showSignInAuthForm={this.showSignInAuthForm} />}
-        {isAuthorized && <LoggedIn logOut={this.logOut} />}
+        {isAuthorized && <LoggedIn closeAccountDetails={this.closeAccountDetails} viewAccountDetails={this.viewAccountDetails} logOut={this.logOut} />}
         {isOpenAuthForm &&
           ReactDOM.createPortal(
             <AuthForm isAccountCreation={isAccountCreation} closeAuthForm={this.closeAuthForm} signUp={this.signUp} signIn={this.signIn} />,
             divModal,
-          )}
+          )
+        }
+        {isOpenAccountDetails &&
+          ReactDOM.createPortal(
+            <AccountDetails closeAccountDetails={this.closeAccountDetails} email={email} />, divModal
+          )
+        }
       </div>
     );
   };
