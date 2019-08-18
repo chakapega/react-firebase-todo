@@ -1,0 +1,29 @@
+.auth-form_component-enter {
+  opacity: 0;
+}
+.auth-form_component-enter-active {
+  opacity: 1;
+  transition: opacity 400ms;
+}
+.auth-form_component-exit {
+  opacity: 1;
+}
+.auth-form_component-exit-active {
+  opacity: 0;
+  transition: opacity 400ms;
+}
+
+.account-details_component-enter {
+  opacity: 0;
+}
+.account-details_component-enter-active {
+  opacity: 1;
+  transition: opacity 400ms;
+}
+.account-details_component-exit {
+  opacity: 1;
+}
+.account-details_component-exit-active {
+  opacity: 0;
+  transition: opacity 400ms;
+}

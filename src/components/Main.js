@@ -41,14 +41,14 @@ class Main extends Component {
       });
     };
   };
-
+  ////////
   showNewTaskForm = () => {
     this.setState({
       isOpenTaskForm: true,
       isAddingNewTask: true
     });
   };
-
+  ////////
   showEditableTaskForm = id => {
     const { tasks } = this.state;
     const editableTask = tasks.find(task => task.id === id);
@@ -173,8 +173,8 @@ class Main extends Component {
     return (
       <main className='center main'>
         {userUid ?
-          <div style={{margin: 15 + 'px'}} className='col s12'>
-            {ReactDOM.createPortal(<button style={{margin: 10 + 'px'}} className="waves-effect waves-light btn" onClick={this.showNewTaskForm}>+ Add Task</button>, buttonsContainer)}
+          <div className='col s12'>
+            {/* <button className="waves-effect waves-light btn" onClick={this.showNewTaskForm}>+ Add Task</button> */}
             <h4>Added tasks:</h4>
           </div>
           :
@@ -212,7 +212,8 @@ class Main extends Component {
 
 const mapStateToProps = state => {
   return {
-    userUid: state.user.uid
+    userUid: state.user.uid,
+    // showNewTaskForm: this.showNewTaskForm
   };
 };
 

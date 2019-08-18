@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { auth } from '../firebase/firebase';
 import { connect } from 'react-redux';
 import { changeUserUid } from '../actions/user';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import LoggedOut from './LoggedOut';
 import LoggedIn from './LoggedIn';
 import AuthForm from './AuthForm';
 import AccountDetails from './AccountDetails';
+import './Authentication.css';
 
 class Authentication extends Component {
   state = {
@@ -100,23 +101,23 @@ class Authentication extends Component {
 
   render() {
     const { isAuthorized, isOpenAuthForm, isAccountCreation, isOpenAccountDetails, email } = this.state;
-    const divModal = document.getElementById('modal');
 
     return (
-      <div className="buttons_container right">
-        {!isAuthorized && <LoggedOut showSignUpAuthForm={this.showSignUpAuthForm} showSignInAuthForm={this.showSignInAuthForm} />}
-        {isAuthorized && <LoggedIn closeAccountDetails={this.closeAccountDetails} viewAccountDetails={this.viewAccountDetails} logOut={this.logOut} />}
-        {isOpenAuthForm &&
-          ReactDOM.createPortal(
-            <AuthForm isAccountCreation={isAccountCreation} closeAuthForm={this.closeAuthForm} signUp={this.signUp} signIn={this.signIn} />,
-            divModal,
-          )
-        }
-        {isOpenAccountDetails &&
-          ReactDOM.createPortal(
-            <AccountDetails closeAccountDetails={this.closeAccountDetails} email={email} />, divModal
-          )
-        }
+      <div className="right">
+        {!isAuthorized && <LoggedOut showSignUpAuthForm={this.showSignUpAuthForm} showSignInAuthForm={this.showSignInAuthForm}/>}
+        {isAuthorized && <LoggedIn closeAccountDetails={this.closeAccountDetails} viewAccountDetails={this.viewAccountDetails} logOut={this.logOut}/>}
+        <TransitionGroup>
+          {isOpenAuthForm &&
+            <CSSTransition timeout={400} classNames='auth-form_component'>
+              <AuthForm isAccountCreation={isAccountCreation} closeAuthForm={this.closeAuthForm} signUp={this.signUp} signIn={this.signIn}/>
+            </CSSTransition>
+          }
+          {isOpenAccountDetails &&
+            <CSSTransition timeout={400} classNames='account-details_component'>
+              <AccountDetails closeAccountDetails={this.closeAccountDetails} email={email}/>
+            </CSSTransition>
+          }
+        </TransitionGroup>
       </div>
     );
   };

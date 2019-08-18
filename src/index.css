@@ -1,0 +1,23 @@
+.modal_container {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  background: #00000030;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn {
+  margin: 10px;
+}
+form {
+  border-radius: 3px;
+}
+textarea {
+  border-radius: 3px;
+}
+.account-details_container {
+  border-radius: 3px;
+}

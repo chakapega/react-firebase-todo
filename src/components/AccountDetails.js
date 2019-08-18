@@ -1,25 +1,22 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 const AccountDetails = ({ email, closeAccountDetails }) => {
-  const modalContainerStyle = {
-    width: 100 + '%',
-    height: 100 + 'vh',
-    position: 'absolute',
-    background: '#00000030',
-    top: 0,
-    left: 0,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  };
+  const divModal = document.getElementById('modal');
 
   return (
-    <div style={modalContainerStyle} className="modal_container">
-      <div className="white account-details_container">
-        <h4>{email}</h4>
-        <button className='waves-effect waves-light btn' type='button' onClick={closeAccountDetails}>Close</button>
+    ReactDOM.createPortal(
+      <div className="modal_container">
+        <div className='row'>
+          <div className="white account-details_container col s12 center">
+            <h4>{email}</h4>
+            <button className='waves-effect waves-light btn' type='button' onClick={closeAccountDetails}>Close</button>
+          </div>
+        </div>
       </div>
-    </div>
+      ,
+      divModal
+    )
   );
 };
 
