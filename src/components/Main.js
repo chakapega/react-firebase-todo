@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { passShowNewTaskFormFunction } from '../actions/main';
 import { db } from '../firebase/firebase';
 import ReactDOM from 'react-dom';
 
@@ -13,6 +14,12 @@ class Main extends Component {
     isAddingNewTask: false,
     editableTask: undefined,
     userUid: null
+  };
+
+  componentDidMount() {
+    const { passShowNewTaskFormFunction } = this.props;
+
+    passShowNewTaskFormFunction(this.showNewTaskForm);
   };
 
   componentDidUpdate(prevProps) {
@@ -41,14 +48,14 @@ class Main extends Component {
       });
     };
   };
-  ////////
+  
   showNewTaskForm = () => {
     this.setState({
       isOpenTaskForm: true,
       isAddingNewTask: true
     });
   };
-  ////////
+  
   showEditableTaskForm = id => {
     const { tasks } = this.state;
     const editableTask = tasks.find(task => task.id === id);
@@ -168,13 +175,11 @@ class Main extends Component {
   render() {
     const { isOpenTaskForm, isAddingNewTask, editableTask, tasks, userUid } = this.state;
     const divModal = document.getElementById('modal');
-    const buttonsContainer = document.querySelector('.buttons_container');
 
     return (
       <main className='center main'>
         {userUid ?
           <div className='col s12'>
-            {/* <button className="waves-effect waves-light btn" onClick={this.showNewTaskForm}>+ Add Task</button> */}
             <h4>Added tasks:</h4>
           </div>
           :
@@ -210,11 +215,12 @@ class Main extends Component {
   };
 };
 
-const mapStateToProps = state => {
-  return {
-    userUid: state.user.uid,
-    // showNewTaskForm: this.showNewTaskForm
-  };
-};
+const mapStateToProps = state => ({
+  userUid: state.user.uid
+});
+  
+const mapDispatchToProps = dispatch => ({
+  passShowNewTaskFormFunction: showNewTaskForm => dispatch(passShowNewTaskFormFunction(showNewTaskForm))
+});
 
-export const WrappedMain = connect(mapStateToProps)(Main);
+export const WrappedMain = connect(mapStateToProps, mapDispatchToProps)(Main);

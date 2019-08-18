@@ -101,11 +101,12 @@ class Authentication extends Component {
 
   render() {
     const { isAuthorized, isOpenAuthForm, isAccountCreation, isOpenAccountDetails, email } = this.state;
+    const { showNewTaskForm } = this.props;
 
     return (
       <div className="right">
         {!isAuthorized && <LoggedOut showSignUpAuthForm={this.showSignUpAuthForm} showSignInAuthForm={this.showSignInAuthForm}/>}
-        {isAuthorized && <LoggedIn closeAccountDetails={this.closeAccountDetails} viewAccountDetails={this.viewAccountDetails} logOut={this.logOut}/>}
+        {isAuthorized && <LoggedIn showNewTaskForm={showNewTaskForm} closeAccountDetails={this.closeAccountDetails} viewAccountDetails={this.viewAccountDetails} logOut={this.logOut}/>}
         <TransitionGroup>
           {isOpenAuthForm &&
             <CSSTransition timeout={400} classNames='auth-form_component'>
@@ -127,6 +128,7 @@ const mapStateToProps = state => ({
   isOpenAuthForm: state.isOpenAuthForm,
   isAuthorized: state.isAuthorized,
   userUid: state.userUid,
+  showNewTaskForm: state.showNewTaskForm.showNewTaskForm
 });
 
 const mapDispatchToProps = dispatch => ({
