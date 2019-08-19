@@ -7,9 +7,9 @@ export default function Task({ task , removeTask , showEditableTaskForm, openSel
 
   return (
     <li id={id}>
-      <div style={{display: 'flex', justifyContent: 'space-between'}} className="collapsible-header" onClick={openSelectedTask}>
+      <div id='task_name__container' className="collapsible-header" onClick={openSelectedTask}>
         {name}
-        <div>
+        <div className='task_icons__container'>
           <i className="material-icons" title='Edit task' onClick={() => showEditableTaskForm(id)}>edit</i>
           <i className="material-icons" title='Remove task' onClick={() => removeTask(id)}>delete</i>
         </div>

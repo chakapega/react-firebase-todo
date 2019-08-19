@@ -1,3 +1,7 @@
 .material-icons:hover {
   color: #26a69a;
 }
+#task_name__container {
+  display: flex;
+  justify-content: space-between;
+}

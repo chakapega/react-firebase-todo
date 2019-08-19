@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default function AuthForm({ closeAuthForm, signIn, signUp, isAccountCreation }) {
+const AuthForm = ({ closeAuthForm, signIn, signUp, isAccountCreation }) => {
   const handleSubmit = isAccountCreation ? signUp : signIn;
-
   const divModal = document.getElementById('modal');
 
   return (
@@ -35,3 +34,5 @@ export default function AuthForm({ closeAuthForm, signIn, signUp, isAccountCreat
     )
   );
 };
+
+export default AuthForm;
