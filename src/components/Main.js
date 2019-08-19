@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { passShowNewTaskFormFunction } from '../actions/main';
 import { db } from '../firebase/firebase';
-import ReactDOM from 'react-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import AddedTasks from './AddedTasks';
 import TaskForm from './TaskForm';
+import './Main.css';
 
 class Main extends Component {
   state = {
@@ -174,41 +175,40 @@ class Main extends Component {
 
   render() {
     const { isOpenTaskForm, isAddingNewTask, editableTask, tasks, userUid } = this.state;
-    const divModal = document.getElementById('modal');
 
     return (
-      <main className='center main'>
+      <main className='center main_container'>
         {userUid ?
           <div className='col s12'>
             <h4>Added tasks:</h4>
           </div>
           :
-          <h2 style={{marginTop: 50 + 'px'}} className="container">Log in to view and add tasks</h2>
+          <h2 className="logged-out_info__container">Log in to view and add tasks</h2>
         }
         <div className="container">
-          <ul className="collapsible popout">
+          <TransitionGroup>
             {isOpenTaskForm &&
-              ReactDOM.createPortal(
+              <CSSTransition timeout={400} classNames='task-form_component'>
                 <TaskForm
-                closeTaskForm={this.closeTaskForm}
-                addTask={this.addTask}
-                isAddingNewTask={isAddingNewTask}
-                editTask={this.editTask}
-                editableTask={editableTask}
-              />,
-              divModal
-              )
+                  closeTaskForm={this.closeTaskForm}
+                  addTask={this.addTask}
+                  isAddingNewTask={isAddingNewTask}
+                  editTask={this.editTask}
+                  editableTask={editableTask}
+                />
+              </CSSTransition>
             }
-            {tasks.length ?
-              <AddedTasks
-                tasks={tasks}
-                showEditableTaskForm={this.showEditableTaskForm}
-                removeTask={this.removeTask}
-                openSelectedTask={this.openSelectedTask}
-              /> : 
-              null
-            }
-          </ul>
+          </TransitionGroup>
+          {tasks.length ?
+            <AddedTasks
+              tasks={tasks}
+              showEditableTaskForm={this.showEditableTaskForm}
+              removeTask={this.removeTask}
+              openSelectedTask={this.openSelectedTask}
+            /> 
+            : 
+            null
+          }
         </div>
       </main>
     );

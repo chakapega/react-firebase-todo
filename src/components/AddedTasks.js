@@ -1,9 +1,7 @@
 import React from 'react';
 import Tasks from './Tasks';
 
-export default function AddedTasks(props) {
-  const { tasks, removeTask, showEditableTaskForm, openSelectedTask } = props;
-  
+export default function AddedTasks({ tasks, removeTask, showEditableTaskForm, openSelectedTask }) {
   return (
     <Tasks tasks={tasks} removeTask={removeTask} showEditableTaskForm={showEditableTaskForm} openSelectedTask={openSelectedTask}/>
   );
