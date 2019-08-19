@@ -7,6 +7,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import AddedTasks from './AddedTasks';
 import TaskForm from './TaskForm';
 import './Main.css';
+import Preloader from './Preloader';
 
 class Main extends Component {
   state = {
@@ -179,37 +180,34 @@ class Main extends Component {
     return (
       <main className='center main_container'>
         {userUid ?
-          <div className='col s12'>
-            <h4>Added tasks:</h4>
+          <div className="container">
+            <TransitionGroup>
+              {isOpenTaskForm &&
+                <CSSTransition timeout={400} classNames='task-form_component'>
+                  <TaskForm
+                    closeTaskForm={this.closeTaskForm}
+                    addTask={this.addTask}
+                    isAddingNewTask={isAddingNewTask}
+                    editTask={this.editTask}
+                    editableTask={editableTask}
+                  />
+                </CSSTransition>
+              }
+            </TransitionGroup>
+            {tasks.length ?
+              <AddedTasks
+                tasks={tasks}
+                showEditableTaskForm={this.showEditableTaskForm}
+                removeTask={this.removeTask}
+                openSelectedTask={this.openSelectedTask}
+              /> 
+              : 
+              <Preloader/>
+            }
           </div>
           :
-          <h2 className="logged-out_info__container">Log in to view and add tasks</h2>
+          <h2 className="logged-out_info__container">Sign in to view and add tasks</h2>
         }
-        <div className="container">
-          <TransitionGroup>
-            {isOpenTaskForm &&
-              <CSSTransition timeout={400} classNames='task-form_component'>
-                <TaskForm
-                  closeTaskForm={this.closeTaskForm}
-                  addTask={this.addTask}
-                  isAddingNewTask={isAddingNewTask}
-                  editTask={this.editTask}
-                  editableTask={editableTask}
-                />
-              </CSSTransition>
-            }
-          </TransitionGroup>
-          {tasks.length ?
-            <AddedTasks
-              tasks={tasks}
-              showEditableTaskForm={this.showEditableTaskForm}
-              removeTask={this.removeTask}
-              openSelectedTask={this.openSelectedTask}
-            /> 
-            : 
-            null
-          }
-        </div>
       </main>
     );
   };
