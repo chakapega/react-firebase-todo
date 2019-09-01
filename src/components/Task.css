@@ -8,4 +8,9 @@
 }
 .material-icons {
   cursor: pointer;
+  padding-right: 5px;
+}
+.task-important {
+  color: red;
+  font-size: 23px;
 }

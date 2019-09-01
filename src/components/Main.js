@@ -154,6 +154,25 @@ class Main extends Component {
     });
   };
 
+  taskPriorityToggle = (id, isImportant) => {
+    const { userUid } = this.state;
+    const { tasks } = this.state;
+    const copiesTasks = [...tasks];
+
+    db.collection(userUid).doc(id).update({
+      isImportant: !isImportant
+    })
+    .then(() => {
+      copiesTasks.forEach(task => {
+        if (task.id === id) {
+          task.isImportant = !isImportant;
+        };
+      });
+
+      this.setState({ tasks: copiesTasks });
+    });
+  };
+
   render() {
     const { isOpenTaskForm, isAddingNewTask, editableTask, tasks, userUid } = this.state;
 
@@ -177,6 +196,7 @@ class Main extends Component {
             {tasks.length ?
               <AddedTasks
                 tasks={tasks}
+                taskPriorityToggle={this.taskPriorityToggle}
                 showEditableTaskForm={this.showEditableTaskForm}
                 removeTask={this.removeTask}
               /> 
