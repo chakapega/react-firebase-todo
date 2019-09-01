@@ -1,0 +1,12 @@
+.task-form {
+  height: 200px;
+  width: 500px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+#input_task-text {
+  width: 460px;
+}

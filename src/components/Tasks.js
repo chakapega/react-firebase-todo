@@ -2,11 +2,11 @@ import React from 'react';
 
 import Task from './Task';
 
-export default function Tasks({ tasks, removeTask, showEditableTaskForm, openSelectedTask }) {
+export default function Tasks({ tasks, removeTask, showEditableTaskForm }) {
   return (
-    <ul className="collapsible popout">
+    <ul className="collection">
       {tasks.map(task => (
-        <Task key={task.id} task={task} removeTask={removeTask} showEditableTaskForm={showEditableTaskForm} openSelectedTask={openSelectedTask}/>
+        <Task key={task.id} task={task} removeTask={removeTask} showEditableTaskForm={showEditableTaskForm}/>
       ))}
     </ul>
   );

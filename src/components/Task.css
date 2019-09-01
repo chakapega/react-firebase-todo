@@ -1,7 +1,11 @@
 .material-icons:hover {
   color: #26a69a;
 }
-#task_name__container {
+.task-container {
   display: flex;
   justify-content: space-between;
+  font-size: 21px;
+}
+.material-icons {
+  cursor: pointer;
 }

@@ -81,21 +81,18 @@ class Main extends Component {
     e.preventDefault();
     e.persist();
 
-    const name = e.target.name.value;
-    const description = e.target.description.value;
+    const taskText = e.target.taskText.value;
     const { userUid } = this.state;
     const newTask = {};
     const { tasks } = this.state;
     
 
-    if (name && description) {
+    if (taskText) {
       db.collection(userUid).add({
-        name: name,
-        description: description
+        taskText: taskText
       })
       .then(document => {
-        newTask.name = name;
-        newTask.description = description;
+        newTask.taskText = taskText;
         newTask.id = document.id;
   
         this.setState({ tasks: [...tasks, newTask] });
@@ -114,22 +111,19 @@ class Main extends Component {
     e.preventDefault();
     e.persist();
     
-    const name = e.target.name.value;
-    const description = e.target.description.value;
+    const taskText = e.target.taskText.value;
     const { userUid } = this.state;
     const { editableTask, tasks } = this.state;
     const copiesTasks = [...tasks];
 
-    if (name, description) {
+    if (taskText) {
       db.collection(userUid).doc(editableTask.id).update({
-        name: name,
-        description: description
+        taskText: taskText
       })
       .then(() => {
         copiesTasks.forEach(task => {
           if(task.id === editableTask.id) {
-            task.name = name;
-            task.description = description;
+            task.taskText = taskText;
           };
         });
   
@@ -160,20 +154,6 @@ class Main extends Component {
     });
   };
 
-  openSelectedTask = e => {
-    if (e.target.className === 'collapsible-header') {
-      const selectedTaskUl = document.getElementById(e.target.parentElement.id);
-
-      selectedTaskUl.classList.toggle('active');
-      
-      if (selectedTaskUl.children[1].style.display === '') {
-        selectedTaskUl.children[1].style.display = 'block';
-      } else if (selectedTaskUl.children[1].style.display === 'block') {
-        selectedTaskUl.children[1].style.display = '';
-      };
-    };
-  };
-
   render() {
     const { isOpenTaskForm, isAddingNewTask, editableTask, tasks, userUid } = this.state;
 
@@ -199,7 +179,6 @@ class Main extends Component {
                 tasks={tasks}
                 showEditableTaskForm={this.showEditableTaskForm}
                 removeTask={this.removeTask}
-                openSelectedTask={this.openSelectedTask}
               /> 
               : 
               <Preloader/>
