@@ -31,3 +31,6 @@ textarea {
 .account-details_container {
   border-radius: 3px;
 }
+.brand-logo {
+  cursor: pointer;
+}

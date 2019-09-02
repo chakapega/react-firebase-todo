@@ -7,7 +7,6 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import AddedTasks from './AddedTasks';
 import TaskForm from './TaskForm';
 import './Main.css';
-import Preloader from './Preloader';
 
 class Main extends Component {
   state = {
@@ -193,16 +192,12 @@ class Main extends Component {
                 </CSSTransition>
               }
             </TransitionGroup>
-            {tasks.length ?
-              <AddedTasks
-                tasks={tasks}
-                taskPriorityToggle={this.taskPriorityToggle}
-                showEditableTaskForm={this.showEditableTaskForm}
-                removeTask={this.removeTask}
-              /> 
-              : 
-              <Preloader/>
-            }
+            <AddedTasks
+              tasks={tasks}
+              taskPriorityToggle={this.taskPriorityToggle}
+              showEditableTaskForm={this.showEditableTaskForm}
+              removeTask={this.removeTask}
+            />
           </div>
           :
           <h2 className="logged-out_info__container">Sign in to view and add tasks</h2>
