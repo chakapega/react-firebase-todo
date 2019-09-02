@@ -65,7 +65,7 @@ class Authentication extends Component {
         this.closeAuthForm();
       })
       .catch(error => {
-        alert(error.message);
+        window.M.toast({html: error.message, displayLength: 9000});
       });
   };
 
@@ -78,10 +78,10 @@ class Authentication extends Component {
     auth.createUserWithEmailAndPassword(email, password)
       .then(() => {
         this.closeAuthForm();
-        alert('Account successfully created and you are logged in');
+        window.M.toast({html: 'Account successfully created and you are logged in', displayLength: 5000});
       })
       .catch((error) => {
-        alert(error.message);
+        window.M.toast({html: error.message, displayLength: 9000});
       });
   };
 

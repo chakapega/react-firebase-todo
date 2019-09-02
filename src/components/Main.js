@@ -102,7 +102,7 @@ class Main extends Component {
         console.error("Error adding document: ", error);
       });
     } else {
-      alert('Please fill in the empty fields');
+      window.M.toast({html: 'Please fill in the field', displayLength: 5000});
     };
   };
 
@@ -131,7 +131,7 @@ class Main extends Component {
         this.closeTaskForm();
       });
     } else {
-      alert('Please fill in the empty fields');
+      window.M.toast({html: 'Please fill in the field', displayLength: 5000});
     };
   };
 
@@ -148,7 +148,6 @@ class Main extends Component {
       });
     })
     .catch(error => {
-      alert("Error");
       console.error("Error removing document: ", error);
     });
   };
