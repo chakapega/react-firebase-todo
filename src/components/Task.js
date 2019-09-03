@@ -11,9 +11,9 @@ export default function Task({ task, taskPriorityToggle, removeTask, showEditabl
         {taskText}
       </span>
       <div className='task_icons__container'>
-        <i className="material-icons" title='Task priority' onClick={() => taskPriorityToggle(id, isImportant)}>priority_high</i>
-        <i className="material-icons" title='Edit task' onClick={() => showEditableTaskForm(id)}>edit</i>
-        <i className="material-icons" title='Remove task' onClick={() => removeTask(id)}>delete</i>
+        <i className="material-icons task-icon" title='Task priority' onClick={() => taskPriorityToggle(id, isImportant)}>priority_high</i>
+        <i className="material-icons task-icon" title='Edit task' onClick={() => showEditableTaskForm(id)}>edit</i>
+        <i className="material-icons task-icon" title='Remove task' onClick={() => removeTask(id)}>delete</i>
       </div>
     </li>
   );

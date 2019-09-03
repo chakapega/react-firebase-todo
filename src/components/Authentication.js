@@ -99,14 +99,35 @@ class Authentication extends Component {
     this.setState({ isOpenAccountDetails: false });
   };
 
+  menuToggle = () => {
+    const buttonsContainer = document.querySelector('.buttons-container');
+
+    if (buttonsContainer.style.display === '') {
+      buttonsContainer.style.display = 'flex';
+    } else if (buttonsContainer.style.display === 'flex') {
+      buttonsContainer.style.display = '';
+    };
+  };
+
+  closeMenu = () => {
+    const buttonsContainer = document.querySelector('.buttons-container');
+    
+    buttonsContainer.style.display = '';
+  };
+
   render() {
     const { isAuthorized, isOpenAuthForm, isAccountCreation, isOpenAccountDetails, email } = this.state;
     const { showNewTaskForm } = this.props;
 
     return (
       <div className="right">
-        {!isAuthorized && <LoggedOut showSignUpAuthForm={this.showSignUpAuthForm} showSignInAuthForm={this.showSignInAuthForm}/>}
-        {isAuthorized && <LoggedIn showNewTaskForm={showNewTaskForm} closeAccountDetails={this.closeAccountDetails} viewAccountDetails={this.viewAccountDetails} logOut={this.logOut}/>}
+        <div className='menu-button'>
+          <i className="material-icons icon-menu" onClick={this.menuToggle}>menu</i>
+        </div>
+        <div className='buttons-container' onClick={this.closeMenu}>
+          {!isAuthorized && <LoggedOut showSignUpAuthForm={this.showSignUpAuthForm} showSignInAuthForm={this.showSignInAuthForm}/>}
+          {isAuthorized && <LoggedIn showNewTaskForm={showNewTaskForm} closeAccountDetails={this.closeAccountDetails} viewAccountDetails={this.viewAccountDetails} logOut={this.logOut}/>}
+        </div>
         <TransitionGroup>
           {isOpenAuthForm &&
             <CSSTransition timeout={400} classNames='auth-form_component'>

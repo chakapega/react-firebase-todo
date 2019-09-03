@@ -27,3 +27,26 @@
   opacity: 0;
   transition: opacity 400ms;
 }
+.menu-button {
+  display: none;
+}
+
+@media screen and (max-width: 544px) {
+  .buttons-container {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #ee6e73;
+    border-radius: 3px;
+    z-index: 2;
+  }
+  .menu-button {
+    display: block;
+  }
+  .icon-menu {
+    color: white;
+  }
+}

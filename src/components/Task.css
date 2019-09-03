@@ -1,4 +1,4 @@
-.material-icons:hover {
+.task-icon:hover {
   color: #26a69a;
 }
 .task-container {
@@ -6,7 +6,7 @@
   justify-content: space-between;
   font-size: 21px;
 }
-.material-icons {
+.task-icon {
   cursor: pointer;
   padding-right: 5px;
 }
