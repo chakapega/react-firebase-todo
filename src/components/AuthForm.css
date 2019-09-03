@@ -1,4 +1,4 @@
-.task-form {
+.auth-form {
   height: 200px;
   width: 500px;
   background-color: white;
@@ -7,16 +7,10 @@
   justify-content: space-around;
   align-items: center;
 }
-#input_task-text {
-  width: 460px;
-}
 
 @media screen and (max-width: 544px) {
-  .task-form {
-    height: 180px;
+  .auth-form {
+    height: 200px;
     width: 400px;
-  }
-  #input_task-text {
-    width: 380px;
   }
 }

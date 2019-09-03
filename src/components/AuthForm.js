@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import './AuthForm.css';
+
 const AuthForm = ({ closeAuthForm, signIn, signUp, isAccountCreation }) => {
   const handleSubmit = isAccountCreation ? signUp : signIn;
   const divModal = document.getElementById('modal');
@@ -9,7 +11,7 @@ const AuthForm = ({ closeAuthForm, signIn, signUp, isAccountCreation }) => {
     ReactDOM.createPortal(
       <div className="modal_container">
         <div className='row'>
-          <form className="white col s12" onSubmit={handleSubmit}>
+          <form className="auth-form" onSubmit={handleSubmit}>
             <div className="input-field col s12">
               <input autoFocus id="input_email" type="email" name='email' className="validate"></input>
               <label htmlFor="input_email">Email</label>
