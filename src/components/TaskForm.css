@@ -14,9 +14,9 @@
 @media screen and (max-width: 544px) {
   .task-form {
     height: 180px;
-    width: 400px;
+    width: 380px;
   }
   #input_task-text {
-    width: 380px;
+    width: 360px;
   }
 }
