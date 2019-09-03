@@ -1,0 +1,15 @@
+.account-details_container {
+  height: 200px;
+  width: 500px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media screen and (max-width: 544px) {
+  .account-details_container {
+    width: 100vw;
+  }
+}
